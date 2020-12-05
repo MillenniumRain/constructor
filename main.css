@@ -23,6 +23,7 @@ body {
     height: 100%;
     display: flex;
     justify-content: center;
+    background: #f0f0f0;
 }
 .page_view .web_site {
     height: 100%;
@@ -33,18 +34,23 @@ body {
     width: 35%;
     height: 100%;    
     border-left: 3px solid #292929;
+    background: #c9c9c9;
 }
 .attach{
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
-.attach .right{
+.attach .left{
     display: flex;
+}
+.attach .right{
+    display: flex;    
 }
 /* icons */
 .icon {
     display: block;
+    background: #fff;
 }
 .icon.pin {
     width: 25px;
@@ -55,6 +61,10 @@ body {
     height: 25px;
 }
 .icon.view_code {
+    width: 25px;
+    height: 25px;
+}
+.icon.copy_html {
     width: 25px;
     height: 25px;
 }
