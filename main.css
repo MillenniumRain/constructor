@@ -1,4 +1,60 @@
 *{
     margin: 0;
     padding: 0;
+    border: solid 1px #686868;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+
+
+
+/*-------------------------------------------*/
+.page_view {
+    width: 65%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.page_view .web_site {
+    height: 100%;
+    width: 90%;
+    overflow: auto;
+}
+.page_control {
+    width: 35%;
+    height: 100%;    
+    border-left: 3px solid #292929;
+}
+.attach{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.attach .right{
+    display: flex;
+}
+/* icons */
+.icon {
+    display: block;
+}
+.icon.pin {
+    width: 25px;
+    height: 25px;
+}
+.icon.full_screen {
+    width: 25px;
+    height: 25px;
+}
+.icon.view_code {
+    width: 25px;
+    height: 25px;
 }
