@@ -68,3 +68,10 @@ body {
     width: 25px;
     height: 25px;
 }
+.btn_tags {
+    width: 80px;
+}
+
+.hide {
+    display: none;
+}

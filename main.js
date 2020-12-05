@@ -51,6 +51,7 @@ full_screen.addEventListener('click', function(event) {
         web_site.style.width = "100%";
         page_control.style.visibility = 'hidden';
         page_control.style.position = 'absolute';
+        page_control.style.right = '100%';
         right.style.visibility = 'visible';       
         right.style.position = 'fixed'; 
         right.style.right = '0';      
@@ -80,3 +81,35 @@ copyHTML.addEventListener('click', function() {
         }, 1000, copied);
     }
 });
+
+let btn_tags =  document.querySelector('.tags');
+btn_tags.addEventListener('click', function(event) {
+    if (event.target.closest('button')) {        
+        button = event.target.closest('button');
+        let  tag_name = button.dataset.block;
+
+        let tags_settings_all =  document.querySelectorAll('.tags_settings');
+        for (let i = 0; i < tags_settings_all.length; i++) {
+            tags_settings_all[i].classList.add('hide');            
+        }
+        let tags_settings =  document.querySelector('.tags_settings.' + tag_name);
+        tags_settings.classList.remove('hide');
+        
+        window.current_tagname = tag_name;
+    }    
+});
+
+let create_tag =  document.querySelector('.create_tag');
+create_tag.addEventListener('click', function(event) {
+        let web_site = document.querySelector('.web_site');
+        let tag_name = window.current_tagname
+        if (tag_name != 'h') {
+            let tag = document.createElement(tag_name);
+            tag.className = tag_name + "_block"; // вставить имя тэка
+            tag.style.height = '300px';
+
+            web_site.append(tag);
+        }    
+      
+});
+
