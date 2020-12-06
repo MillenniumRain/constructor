@@ -1,13 +1,33 @@
 
-let current_active = '';
-let current_tagname = ""
 
-let main_page = document.querySelector('.web_site'); //  отобразить теги
-main_page.addEventListener('click', function(event) {  
+let web_site = document.querySelector('.web_site');
+let view_code = document.querySelector('.view_code'); 
+let page_view = document.querySelector('.page_view');
+let page_control = document.querySelector('.page_control');
+let pin = document.querySelector('.pin'); 
+let create_tag =  document.querySelector('.create_tag');
+let btn_tags =  document.querySelector('.tags');
+let current_active_checkbox = document.querySelector('#current_active');
+let copyHTML = document.querySelector('.copy_html');
+let full_screen = document.querySelector('.full_screen');
+
+let current_active = web_site;
+let current_tagname = 'div';
+
+
+current_active_checkbox.addEventListener('click', function(){
+    all_active_tag = document.querySelectorAll('.active_tag');
+    for (let index = 0; index < all_active_tag.length; index++) {
+        all_active_tag[index].classList.remove('active_tag') ;            
+    }
+    web_site.classList.add('active_tag');        
+    current_active = web_site;
+});
+
+web_site.addEventListener('click', function(event) {  
     target =  event.target.closest('div');
     if(target.classList.contains('active_tag')) {
-        target.classList.remove('active_tag');
-        
+        target.classList.remove('active_tag');        
     } else {
         all_active_tag = document.querySelectorAll('.active_tag');
         for (let index = 0; index < all_active_tag.length; index++) {
@@ -15,13 +35,12 @@ main_page.addEventListener('click', function(event) {
         }
         target.classList.add('active_tag');        
         current_active = target;
-        document.querySelector('#current_active').checked = false;
+        current_active_checkbox.checked = false;
     }
 });
 
-let view_code = document.querySelector('.view_code'); //  отобразить теги
+//  отобразить теги
 view_code.addEventListener('click', function(event) {  
-    let web_site = document.querySelector('.web_site');  
     if(this.classList.contains('active')) {
         this.classList.remove('active');
         web_site.innerHTML = web_site.innerHTML.replace('<plaintext>', '');
@@ -32,11 +51,8 @@ view_code.addEventListener('click', function(event) {
     }
 });
 
-let pin = document.querySelector('.pin'); //  закрепить
-pin.addEventListener('click', function(event) {    
-    let page_view = document.querySelector('.page_view');
-    let page_control = document.querySelector('.page_control');
 
+pin.addEventListener('click', function(event) {    
     if(this.classList.contains('active')) {
         this.classList.remove('active');
         page_view.style.width = "65%";
@@ -46,17 +62,12 @@ pin.addEventListener('click', function(event) {
         page_view.style.width = "100%";
         page_control.style.position = 'fixed';
         page_control.style.right = '0';
-
     }
 });
 
-let full_screen = document.querySelector('.full_screen'); //  фулскрин
-full_screen.addEventListener('click', function(event) {    
-    let page_view = document.querySelector('.page_view');
-    let web_site = document.querySelector('.web_site');
-    let page_control = document.querySelector('.page_control');
-    let right = page_control.querySelector('.attach .full_screen');
 
+full_screen.addEventListener('click', function(event) {    
+    let right = page_control.querySelector('.attach .full_screen');
     if(this.classList.contains('active')) {
         this.classList.remove('active');
         page_view.style.width = "65%";
@@ -79,10 +90,9 @@ full_screen.addEventListener('click', function(event) {
     }
 });
 
-let copyHTML = document.querySelector('.copy_html'); // копирование  html
+
 copyHTML.addEventListener('click', function() {
     if (document.querySelector('div.hide_3') == null){
-        let web_site = document.querySelector('.web_site');
         copyText = web_site.innerHTML.replace('<plaintext>', '').replace(/            /gm, '').trim();
         let textBuffer = document.getElementById("buffer"); 
         // пока оставлю так потом найду метод получше с копированием в буфер (textarea скрыто за экраном (absolute))
@@ -90,7 +100,6 @@ copyHTML.addEventListener('click', function() {
 
         textBuffer.select();
         document.execCommand("copy"); 
-        let page_control = document.querySelector('.attach .left');
         let copied = document.createElement('div');
         copied.className = "hide_3";
         copied.innerHTML = "Скопировано!";
@@ -102,7 +111,7 @@ copyHTML.addEventListener('click', function() {
     }
 });
 
-let btn_tags =  document.querySelector('.tags');
+
 btn_tags.addEventListener('click', function(event) {
     if (event.target.closest('button')) {        
         button = event.target.closest('button');
@@ -119,18 +128,14 @@ btn_tags.addEventListener('click', function(event) {
     }    
 });
 
-let create_tag =  document.querySelector('.create_tag');
-create_tag.addEventListener('click', function(event) {
-        let web_site = document.querySelector('.web_site');
+
+create_tag.addEventListener('click', function(event) {       
         let tag_name = current_tagname;
         if (tag_name != 'h') {
             let tag = document.createElement(tag_name);
             tag.className = tag_name + "_block"; 
             tag.style.height = '300px';
-            web_site.innerHTML += `
-            `;
-            web_site.append(tag);
-        }    
-      
+            current_active.append(tag);
+        }          
 });
 
