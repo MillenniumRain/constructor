@@ -75,3 +75,7 @@ body {
 .hide {
     display: none;
 }
+
+.active_tag {
+    border: solid 2px #457fec ;
+}

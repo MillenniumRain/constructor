@@ -1,6 +1,26 @@
 
-let fullscreen = document.querySelector('.view_code'); //  отобразить теги
-fullscreen.addEventListener('click', function(event) {  
+let current_active = '';
+let current_tagname = ""
+
+let main_page = document.querySelector('.web_site'); //  отобразить теги
+main_page.addEventListener('click', function(event) {  
+    target =  event.target.closest('div');
+    if(target.classList.contains('active_tag')) {
+        target.classList.remove('active_tag');
+        
+    } else {
+        all_active_tag = document.querySelectorAll('.active_tag');
+        for (let index = 0; index < all_active_tag.length; index++) {
+            all_active_tag[index].classList.remove('active_tag') ;            
+        }
+        target.classList.add('active_tag');        
+        current_active = target;
+        document.querySelector('#current_active').checked = false;
+    }
+});
+
+let view_code = document.querySelector('.view_code'); //  отобразить теги
+view_code.addEventListener('click', function(event) {  
     let web_site = document.querySelector('.web_site');  
     if(this.classList.contains('active')) {
         this.classList.remove('active');
@@ -95,19 +115,20 @@ btn_tags.addEventListener('click', function(event) {
         let tags_settings =  document.querySelector('.tags_settings.' + tag_name);
         tags_settings.classList.remove('hide');
         
-        window.current_tagname = tag_name;
+        current_tagname = tag_name;
     }    
 });
 
 let create_tag =  document.querySelector('.create_tag');
 create_tag.addEventListener('click', function(event) {
         let web_site = document.querySelector('.web_site');
-        let tag_name = window.current_tagname
+        let tag_name = current_tagname;
         if (tag_name != 'h') {
             let tag = document.createElement(tag_name);
-            tag.className = tag_name + "_block"; // вставить имя тэка
+            tag.className = tag_name + "_block"; 
             tag.style.height = '300px';
-
+            web_site.innerHTML += `
+            `;
             web_site.append(tag);
         }    
       
