@@ -27,10 +27,10 @@ body {
 }
 .page_view .web_site {
     height: 100%;
-    width: 90%;
+    width: 100%;
     overflow: auto;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    /* border-left: 1px solid black;
+    border-right: 1px solid black; */
 }
 .page_control {
     width: 35%;

@@ -6,6 +6,8 @@ const page_view = document.querySelector('.page_view');
 const page_control = document.querySelector('.page_control');
 const pin = document.querySelector('.pin'); 
 const create_tag =  document.querySelector('.create_tag');
+const change_tag =  document.querySelector('.change_tag');
+const delete_tag =  document.querySelector('.delete_tag');
 const btn_tags =  document.querySelector('.tags');
 const current_active_checkbox = document.querySelector('#current_active');
 const copyHTML = document.querySelector('.copy_html');
@@ -22,6 +24,7 @@ current_active_checkbox.addEventListener('click', function(){
     }
     web_site.classList.add('active_tag');        
     current_active = web_site;
+    
 });
 
 web_site.addEventListener('click', function(event) {  
@@ -30,7 +33,17 @@ web_site.addEventListener('click', function(event) {
     for (let i = 0; i < all_active_tag.length; i++) {
         all_active_tag[i].classList.remove('active_tag') ;            
     }
-    target.classList.add('active_tag');        
+    target.classList.add('active_tag');    
+    if (target.getAttribute('style')) {
+        let split_css = target.getAttribute('style').split('; ');   
+        let css_arr = [];
+        for (let i = 0; i < split_css.length; i++) {
+            let temp_css = split_css[i].split(': ');
+            // css_arr[temp_css[0]] = temp_css[1];
+            document.querySelector('input[data-tags-settings="' + temp_css[0] + '"]').value = temp_css[1];
+        } 
+    }
+  
     current_active = target;
     current_active_checkbox.checked = false;
     
@@ -68,7 +81,7 @@ full_screen.addEventListener('click', function(event) {
     if(this.classList.contains('active')) {
         this.classList.remove('active');
         page_view.style.width = "65%";
-        web_site.style.width = "90%";
+        web_site.style.width = "100%";
         page_control.style.display = 'block';
         page_control.style.visibility = 'visible';
         page_control.style.position = 'unset';     
@@ -120,7 +133,11 @@ btn_tags.addEventListener('click', function(event) {
         }
         let tags_settings =  document.querySelector('.tags_settings.' + tag_name);
         tags_settings.classList.remove('hide');
-        
+
+        let btn_tag_edit = document.querySelectorAll('.btn_tag_edit')
+        for (let i = 0; i < btn_tag_edit.length; i++) {
+           btn_tag_edit[i].classList.remove('hide');            
+        }
         current_tagname = tag_name;
     }    
 });
@@ -135,13 +152,26 @@ create_tag.addEventListener('click', function(event) {
             css += settings[i].getAttribute('data-tags-settings') + ": " + settings[i].value + ";\n";
         }        
     }
-    console.log(css);
-
-
    
     let tag = document.createElement(tag_name);
     tag.className = tag_name + "_block"; 
     tag.style.cssText = css;
     current_active.append(tag);        
+});
+
+change_tag.addEventListener('click', function(event) {       
+    let tag_name = current_tagname;
+    let css = "";
+    let settings =  document.querySelectorAll('.setting_' + tag_name);
+    for (let i = 0; i < settings.length; i++) {
+        if (settings[i].value) {
+            css += settings[i].getAttribute('data-tags-settings') + ":" + settings[i].value + ";\n";
+        }        
+    }
+    if (current_active != web_site) current_active.style.cssText = css;     
+});
+
+delete_tag.addEventListener('click', function(event) {       
+    if (current_active != web_site) current_active.remove();     
 });
 
