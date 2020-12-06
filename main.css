@@ -79,5 +79,7 @@ body {
 }
 
 .active_tag {
-    border: solid 2px #457fec !important;
+    position: relative;
+    outline: 4px inset #457fec !important;
+    outline-offset: -4px !important;
 }

@@ -18,7 +18,7 @@ let current_tagname = 'div';
 
 
 current_active_checkbox.addEventListener('click', function(){
-    all_active_tag = document.querySelectorAll('.active_tag');
+    let all_active_tag = document.querySelectorAll('.active_tag');
     for (let i = 0; i < all_active_tag.length; i++) {
         all_active_tag[i].classList.remove('active_tag') ;            
     }
@@ -28,25 +28,32 @@ current_active_checkbox.addEventListener('click', function(){
 });
 
 web_site.addEventListener('click', function(event) {  
-    target =  event.target.closest('div');
-    all_active_tag = document.querySelectorAll('.active_tag');
-    for (let i = 0; i < all_active_tag.length; i++) {
-        all_active_tag[i].classList.remove('active_tag') ;            
-    }
-    target.classList.add('active_tag');    
+    let target =  event.target.closest('div');
+    let active_tag = document.querySelector('.active_tag');
+    console.log(active_tag);
+    target.classList.add('active_tag');
+    if (active_tag) active_tag.classList.remove('active_tag');
+    if (target == active_tag) {
+        target.classList.remove('active_tag');
+        current_active_checkbox.checked = true; 
+        current_active = web_site;
+        web_site.classList.add('active_tag');
+    } else {
+        current_active = target;        
+        current_active_checkbox.checked = false; 
+    }    
+
     if (target.getAttribute('style')) {
         let split_css = target.getAttribute('style').split('; ');   
         let css_arr = [];
         for (let i = 0; i < split_css.length; i++) {
             let temp_css = split_css[i].split(': ');
-            // css_arr[temp_css[0]] = temp_css[1];
             document.querySelector('input[data-tags-settings="' + temp_css[0] + '"]').value = temp_css[1];
         } 
     }
   
-    current_active = target;
-    current_active_checkbox.checked = false;
     
+   
 });
 
 //  отобразить теги
