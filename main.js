@@ -1,15 +1,15 @@
 
 
-let web_site = document.querySelector('.web_site');
-let view_code = document.querySelector('.view_code'); 
-let page_view = document.querySelector('.page_view');
-let page_control = document.querySelector('.page_control');
-let pin = document.querySelector('.pin'); 
-let create_tag =  document.querySelector('.create_tag');
-let btn_tags =  document.querySelector('.tags');
-let current_active_checkbox = document.querySelector('#current_active');
-let copyHTML = document.querySelector('.copy_html');
-let full_screen = document.querySelector('.full_screen');
+const web_site = document.querySelector('.web_site');
+const view_code = document.querySelector('.view_code'); 
+const page_view = document.querySelector('.page_view');
+const page_control = document.querySelector('.page_control');
+const pin = document.querySelector('.pin'); 
+const create_tag =  document.querySelector('.create_tag');
+const btn_tags =  document.querySelector('.tags');
+const current_active_checkbox = document.querySelector('#current_active');
+const copyHTML = document.querySelector('.copy_html');
+const full_screen = document.querySelector('.full_screen');
 
 let current_active = web_site;
 let current_tagname = 'div';
@@ -17,8 +17,8 @@ let current_tagname = 'div';
 
 current_active_checkbox.addEventListener('click', function(){
     all_active_tag = document.querySelectorAll('.active_tag');
-    for (let index = 0; index < all_active_tag.length; index++) {
-        all_active_tag[index].classList.remove('active_tag') ;            
+    for (let i = 0; i < all_active_tag.length; i++) {
+        all_active_tag[i].classList.remove('active_tag') ;            
     }
     web_site.classList.add('active_tag');        
     current_active = web_site;
@@ -26,17 +26,14 @@ current_active_checkbox.addEventListener('click', function(){
 
 web_site.addEventListener('click', function(event) {  
     target =  event.target.closest('div');
-    if(target.classList.contains('active_tag')) {
-        target.classList.remove('active_tag');        
-    } else {
-        all_active_tag = document.querySelectorAll('.active_tag');
-        for (let index = 0; index < all_active_tag.length; index++) {
-            all_active_tag[index].classList.remove('active_tag') ;            
-        }
-        target.classList.add('active_tag');        
-        current_active = target;
-        current_active_checkbox.checked = false;
+    all_active_tag = document.querySelectorAll('.active_tag');
+    for (let i = 0; i < all_active_tag.length; i++) {
+        all_active_tag[i].classList.remove('active_tag') ;            
     }
+    target.classList.add('active_tag');        
+    current_active = target;
+    current_active_checkbox.checked = false;
+    
 });
 
 //  отобразить теги
@@ -130,12 +127,21 @@ btn_tags.addEventListener('click', function(event) {
 
 
 create_tag.addEventListener('click', function(event) {       
-        let tag_name = current_tagname;
-        if (tag_name != 'h') {
-            let tag = document.createElement(tag_name);
-            tag.className = tag_name + "_block"; 
-            tag.style.height = '300px';
-            current_active.append(tag);
-        }          
+    let tag_name = current_tagname;
+    let css = "";
+    let settings =  document.querySelectorAll('.setting_' + tag_name);
+    for (let i = 0; i < settings.length; i++) {
+        if (settings[i].value) {
+            css += settings[i].getAttribute('data-tags-settings') + ": " + settings[i].value + ";\n";
+        }        
+    }
+    console.log(css);
+
+
+   
+    let tag = document.createElement(tag_name);
+    tag.className = tag_name + "_block"; 
+    tag.style.cssText = css;
+    current_active.append(tag);        
 });
 
