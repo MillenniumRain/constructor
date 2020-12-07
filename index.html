@@ -21,6 +21,7 @@
             <div class="left">
                 <div class="icon view_code"></div>
                 <div class="icon copy_html"></div>                
+                <div class="icon active_parent"></div>                
             </div>
             <div class="right">
                 <div class="icon pin"></div>
@@ -41,9 +42,21 @@
             <input class="setting_div" placeholder="Граница" data-tags-settings="border" type="text" value="">
             <input class="setting_div" placeholder="Отступ внешний" data-tags-settings="margin" type="text" value="0px">
             <input class="setting_div" placeholder="Отступ внутренний" data-tags-settings="padding" type="text" value="0px">
-            <input class="setting_div" placeholder="Display" data-tags-settings="display" type="text" value="flex">
+            <!-- <input class="setting_div" placeholder="Display"  type="text" value="flex"> -->
+            <select class="setting_div" data-tags-settings="display">
+                <option value="block">block</option>
+                <option value="inline-block">inline-block</option>
+                <option value="table">table</option>
+                <option value="flex" selected>flex</option>
+                <option value="grid">grid</option>
+                <option value="none">none</option>
+               </select>
             <input class="setting_div" placeholder="Outline" data-tags-settings="outline" type="text" value="2px dashed #000000cc">
             <input class="setting_div" placeholder="Outline-offset" data-tags-settings="outline-offset" type="text" value="-2px">
+            <datalist id="setting_div_display">
+                <option value="Текст1">
+                <option value="Текст2">
+            </datalist>
         </div>
         <div class="tags_settings p hide">
             <input class="setting_p" placeholder="Ширина" data-tags-settings="width" type="text">
@@ -62,13 +75,80 @@
             <input class="setting_span" placeholder="Отступ внешний" data-tags-settings="margin" type="text">
             <input class="setting_span" placeholder="Отступ внутренний" data-tags-settings="padding" type="text">
         </div>
-        <button class="create_tag btn_tag_edit hide" >Создать блок</button> 
-        <button class="change_tag btn_tag_edit hide" >Изменить блок</button> 
-        <button class="delete_tag btn_tag_edit hide" >Удалить блок</button> 
+        
+        <div class="div-settings">
+            <div class="group-s dimension">
+                Ширина: <input class="" placeholder="" data-tags-settings="" type="text">
+                Высота: <input class="" placeholder="" data-tags-settings="" type="text">               
+            </div>
+            <div class="group-s display">
+                Display:   
+                <select class="setting_div" data-tags-settings="display">
+                    <option value="block">block</option>
+                    <option value="inline-block">inline-block</option>
+                    <option value="table">table</option>
+                    <option value="flex" selected>flex</option>
+                    <option value="grid">grid</option>
+                    <option value="none">none</option>
+                </select>            
+            </div>
+            <div class="group-s outline">
+                Контур: <input class="" placeholder="Outline" data-tags-settings="outline" type="text" value="2px dashed #000000cc">
+                Отступ контура: <input class="" placeholder="Outline-offset" data-tags-settings="outline-offset" type="text" value="-2px">
+            </div>
+            
+            <div class="group-s indents">
+                <div class="margin">
+                    Margin:
+                    <div class="settings-mp">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                    </div>
+                </div>
+                <div class="padding">
+                    Padding:
+                    <div class="settings-mp">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="group-s color">
+                Цвет: <input class="" placeholder="" data-tags-settings="" type="text">
+                Цвет фона: <input class="" placeholder="" data-tags-settings="" type="text">
+            </div>
+            <div class="group-s indents">
+                <div class="border">
+                    Border:
+                    <div class="settings-mp">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                        <input class="" placeholder="" data-tags-settings="" type="text">
+                    </div>
+                </div>
+            </div>
+            <button class="create_tag btn_tag_edit" >Создать блок</button> 
+            <button class="change_tag btn_tag_edit" >Изменить блок</button> 
+            <button class="delete_tag btn_tag_edit" >Удалить блок</button> 
+        </div>
+        <div class="allllll">
+            <input class="switch-units" id="switch-units0" name="switch-units" type="radio" checked><label class="switch-left" for="switch-units0">px</label>
+            <input class="switch-center" placeholder="" data-tags-settings="" type="text">
+            <input class="switch-units" id="switch-units1" name="switch-units" type="radio"><label class="switch-right" for="switch-units1">&nbsp;%</label> 
+        </div>
+
 
     </div>
-
-
     <script src="icons.js"></script>
     <script src="main.js"></script>
 </body>

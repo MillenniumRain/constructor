@@ -1,5 +1,3 @@
-
-
 const web_site = document.querySelector('.web_site');
 const view_code = document.querySelector('.view_code'); 
 const page_view = document.querySelector('.page_view');
@@ -11,17 +9,15 @@ const delete_tag =  document.querySelector('.delete_tag');
 const btn_tags =  document.querySelector('.tags');
 const current_active_checkbox = document.querySelector('#current_active');
 const copyHTML = document.querySelector('.copy_html');
+const active_parent = document.querySelector('.active_parent');
 const full_screen = document.querySelector('.full_screen');
 
 let current_active = web_site;
-let current_tagname = 'div';
 
 
 current_active_checkbox.addEventListener('click', function(){
-    let all_active_tag = document.querySelectorAll('.active_tag');
-    for (let i = 0; i < all_active_tag.length; i++) {
-        all_active_tag[i].classList.remove('active_tag') ;            
-    }
+    let active_tag = document.querySelector('.active_tag');
+    if (active_tag) active_tag.classList.remove('active_tag');
     web_site.classList.add('active_tag');        
     current_active = web_site;
     
@@ -30,7 +26,7 @@ current_active_checkbox.addEventListener('click', function(){
 web_site.addEventListener('click', function(event) {  
     let target =  event.target.closest('div');
     let active_tag = document.querySelector('.active_tag');
-    console.log(active_tag);
+
     target.classList.add('active_tag');
     if (active_tag) active_tag.classList.remove('active_tag');
     if (target == active_tag) {
@@ -48,7 +44,7 @@ web_site.addEventListener('click', function(event) {
         let css_arr = [];
         for (let i = 0; i < split_css.length; i++) {
             let temp_css = split_css[i].split(': ');
-            document.querySelector('input[data-tags-settings="' + temp_css[0] + '"]').value = temp_css[1];
+            document.querySelector('.tags_settings [data-tags-settings="' + temp_css[0] + '"]').value = temp_css[1];
         } 
     }
   
@@ -182,3 +178,12 @@ delete_tag.addEventListener('click', function(event) {
     if (current_active != web_site) current_active.remove();     
 });
 
+active_parent.addEventListener('click', function() {
+    if ((current_active != web_site)/* && (!current_active.parentElement.classList.contains('web_site'))*/) {
+        if (current_active.parentElement.classList.contains('web_site')) current_active_checkbox.checked = true;
+        current_active = current_active.parentElement;
+        let active_tag = document.querySelector('.active_tag');
+        if (active_tag) active_tag.classList.remove('active_tag');
+        current_active.classList.add('active_tag');
+    }
+});
