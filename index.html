@@ -10,9 +10,7 @@
 
 <body>
     <div class="page_view">
-        <div class="web_site">
-            
-        </div>
+        <div class="web_site"></div>
         <textarea type="text" id="buffer" style=" position: absolute; left: 10000px;"> </textarea>
     </div>
     <div class="page_control">
@@ -42,15 +40,7 @@
             <input class="setting_div" placeholder="Граница" data-tags-settings="border" type="text" value="">
             <input class="setting_div" placeholder="Отступ внешний" data-tags-settings="margin" type="text" value="0px">
             <input class="setting_div" placeholder="Отступ внутренний" data-tags-settings="padding" type="text" value="0px">
-            <!-- <input class="setting_div" placeholder="Display"  type="text" value="flex"> -->
-            <select class="setting_div" data-tags-settings="display">
-                <option value="block">block</option>
-                <option value="inline-block">inline-block</option>
-                <option value="table">table</option>
-                <option value="flex" selected>flex</option>
-                <option value="grid">grid</option>
-                <option value="none">none</option>
-               </select>
+          
             <input class="setting_div" placeholder="Outline" data-tags-settings="outline" type="text" value="2px dashed #000000cc">
             <input class="setting_div" placeholder="Outline-offset" data-tags-settings="outline-offset" type="text" value="-2px">
             <datalist id="setting_div_display">
@@ -76,10 +66,17 @@
             <input class="setting_span" placeholder="Отступ внутренний" data-tags-settings="padding" type="text">
         </div>
         
+
+
+
+
+
+
+
         <div class="div-settings">
             <div class="group-s dimension">
-                Ширина: <input class="" placeholder="" data-tags-settings="" type="text">
-                Высота: <input class="" placeholder="" data-tags-settings="" type="text">               
+                Ширина: <input class="" placeholder="" data-units="1" data-tags-settings="" type="text"> &nbsp;&nbsp;
+                Высота: <input class="" placeholder="" data-units="1" data-tags-settings="" type="text">           
             </div>
             <div class="group-s display">
                 Display:   
@@ -99,57 +96,47 @@
             
             <div class="group-s indents">
                 <div class="margin">
-                    Margin:
+                   Margin:  <input class="indents-show" type="checkbox" style="width:auto;height: auto;">
                     <div class="settings-mp">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
+                        <input class="left" placeholder="" data-units="1" data-tags-settings="" type="text">
+                        <input class="top" placeholder="" data-units="1" data-tags-settings="" type="text">                        
+                        <input class="center" placeholder="" data-tags-settings="" type="text">
+                        <input class="right" placeholder="" data-units="1" data-tags-settings="" type="text">
+                        <input class="bottom" placeholder="" data-units="1" data-tags-settings="" type="text">
                     </div>
-                </div>
-                <div class="padding">
-                    Padding:
-                    <div class="settings-mp">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                    </div>
-                </div>
-                
+                </div> 
             </div>
-            
+            <div class="group-s indents">
+                <div class="padding">
+                    Padding: <input class="indents-show" type="checkbox" style="width:auto;height: auto;">
+                    <div class="settings-mp">
+                        <input class="left" placeholder="" data-units="1" data-tags-settings="" type="text">
+                        <input class="top" placeholder="" data-units="1" data-tags-settings="" type="text">                        
+                        <input class="center" placeholder="" data-tags-settings="" type="text">
+                        <input class="right" placeholder="" data-units="1" data-tags-settings="" type="text">
+                        <input class="bottom" placeholder="" data-units="1" data-tags-settings="" type="text">
+                    </div>
+                </div>                
+            </div>
+
             <div class="group-s color">
-                Цвет: <input class="" placeholder="" data-tags-settings="" type="text">
+                Цвет: <input class="" placeholder="" data-tags-settings="" type="text"> &nbsp;&nbsp;
                 Цвет фона: <input class="" placeholder="" data-tags-settings="" type="text">
             </div>
             <div class="group-s indents">
                 <div class="border">
-                    Border:
-                    <div class="settings-mp">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                        <input class="" placeholder="" data-tags-settings="" type="text">
-                    </div>
+                    Border:    <input class="border" placeholder="" data-tags-settings="" type="text">
                 </div>
             </div>
             <button class="create_tag btn_tag_edit" >Создать блок</button> 
             <button class="change_tag btn_tag_edit" >Изменить блок</button> 
             <button class="delete_tag btn_tag_edit" >Удалить блок</button> 
         </div>
-        <div class="allllll">
-            <input class="switch-units" id="switch-units0" name="switch-units" type="radio" checked><label class="switch-left" for="switch-units0">px</label>
-            <input class="switch-center" placeholder="" data-tags-settings="" type="text">
-            <input class="switch-units" id="switch-units1" name="switch-units" type="radio"><label class="switch-right" for="switch-units1">&nbsp;%</label> 
-        </div>
 
 
     </div>
     <script src="icons.js"></script>
+    <script src="functions.js"></script>
     <script src="main.js"></script>
 </body>
 

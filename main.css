@@ -72,7 +72,7 @@ input {
 }
 
 .hide {
-    display: none;
+    display: none !important;
 }
 select.setting_div {
     width: 173px;
@@ -90,8 +90,8 @@ select.setting_div {
 .group-s input {
     width: 52px;
     border: 1px solid black;
-    border-radius: 5px;
-    margin-right: 2px;
+    /* border-radius: 5px; */
+    /* margin-right: 2px; */
 }
 .group-s select {
     width: 101px;
@@ -109,19 +109,21 @@ select.setting_div {
     margin-right: 20px;
     position: relative;
 }
-.border .settings-mp input:nth-child(2),
-.indents .padding input:nth-child(2),.indents .margin input:nth-child(2){
+.units.top {
     position: absolute;
     top: -23px;
 }
-.border .settings-mp input:nth-child(3),
-.indents .padding input:nth-child(3),.indents .margin input:nth-child(3){
+
+.units.bottom {
     position: absolute;
     bottom: -23px;
 }
-.border .settings-mp  input:nth-child(4),
-.indents .padding input:nth-child(4),.indents .margin input:nth-child(4){
+.settings-mp input.center{
     width: 119px;
+}
+
+input.center{
+    border-radius: 15px;
 }
 
 .settings-mp {
@@ -132,6 +134,7 @@ select.setting_div {
 }
 .div-settings .group-s{
     margin-bottom: 15px;
+    display: flex;
 }
 
 .color input {
@@ -140,37 +143,44 @@ select.setting_div {
 .switch-units{
     display: none;
 }
-.switch-center {
-    border: 1px solid black;
-}
+
+
 .switch-units + label.switch-left{
     border: 1px solid black;
     background: #ffffff;
     border-radius: 10px 0px 0px 10px;
     padding-left: 3px;
     border-right: none;
+    cursor: pointer;
 }
 .switch-units + label.switch-right{
     border: 1px solid black;
     background: #ffffff;
     border-radius: 0px 10px 10px 0px;
     padding-right: 3px;
+    cursor: pointer;
     border-left: none;
 }
 .switch-units:checked + label.switch-left{
-    border: 1px solid black;
     background: #457fec;
-    border-radius: 10px 0px 0px 10px;
     padding-left: 3px;
     border-right: none;
 }
 .switch-units:checked + label.switch-right{
-    border: 1px solid black;
     background: #457fec;
-    border-radius: 0px 10px 10px 0px;
     padding-right: 3px;
     border-left: none;
 }
-.allllll{
+.units{
     display: flex;
+    height: 21px;
+}
+.indents-show + div{
+    display: none;
+}
+.indents-show:checked + div{
+    display: flex;
+}
+.border {
+    width: 119px;
 }
