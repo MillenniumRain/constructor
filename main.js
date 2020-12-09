@@ -7,7 +7,7 @@ const create_tag =  document.querySelector('.create_tag');
 const change_tag =  document.querySelector('.change_tag');
 const delete_tag =  document.querySelector('.delete_tag');
 const btn_tags =  document.querySelector('.tags');
-const current_active_checkbox = document.querySelector('#current_active');
+const edit_checkbox = document.querySelector('#current_active_edit');
 const copyHTML = document.querySelector('.copy_html');
 const active_parent = document.querySelector('.active_parent');
 const full_screen = document.querySelector('.full_screen');
@@ -15,12 +15,14 @@ const full_screen = document.querySelector('.full_screen');
 let current_active = web_site;
 
 
-current_active_checkbox.addEventListener('click', function(){
-    let active_tag = document.querySelector('.active_tag');
-    if (active_tag) active_tag.classList.remove('active_tag');
-    web_site.classList.add('active_tag');        
-    current_active = web_site;
-    
+edit_checkbox.addEventListener('click', function(){
+    if (current_active != web_site) {
+        console.log('edit');
+        change_tag.disabled = true;
+    } else {
+        edit_checkbox.checked = false;        
+    } 
+    if (!edit_checkbox.checked) change_tag.disabled = false;
 });
 
 web_site.addEventListener('click', function(event) {  
@@ -31,20 +33,17 @@ web_site.addEventListener('click', function(event) {
     if (active_tag) active_tag.classList.remove('active_tag');
     if (target == active_tag) {
         target.classList.remove('active_tag');
-        current_active_checkbox.checked = true; 
         current_active = web_site;
         web_site.classList.add('active_tag');
     } else {
         current_active = target;        
-        current_active_checkbox.checked = false; 
     }    
 
     if (target.getAttribute('style')) {
-        let split_css = target.getAttribute('style').split('; ');   
-        let css_arr = [];
-        for (let i = 0; i < split_css.length; i++) {
-            let temp_css = split_css[i].split(': ');
-            document.querySelector('.tags_settings [data-tags-settings="' + temp_css[0] + '"]').value = temp_css[1];
+        let split_css = target.getAttribute('style').split(';'); 
+        for (let i = 0; i < split_css.length - 1; i++) {
+            let temp_css = split_css[i].split(':');
+            document.querySelector('.tags_settings [data-tags-settings="' + temp_css[0].trim() + '"]').value = temp_css[1].trim();
         } 
     }
   

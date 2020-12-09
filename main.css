@@ -100,7 +100,7 @@ select.setting_div {
     border-radius: 4px;
 }
 .outline input:nth-child(1) {
-    width: 150px;
+    width: 178px;
 }
 .indents {
     display: flex;
@@ -138,7 +138,7 @@ input.center{
 }
 
 .color input {
-    width: 72px;
+    width: 103px;
 }
 .switch-units{
     display: none;
