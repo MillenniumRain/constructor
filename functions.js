@@ -13,3 +13,22 @@ for (let i = 0; i < input_units.length; i++) {
     `;
     input_units[i].replaceWith(new_block);
 }
+function registerInputOnChange(object, event_on){
+    for (let i = 0; i < object.length; i++) {   
+        object[i].addEventListener(event_on, function(){
+            if (edit_checkbox.checked) {
+                let css_text = this.value;
+                let css = this.getAttribute('data-tags-settings');
+                current_active.style[css] = css_text;
+            }        
+        });
+    }
+}
+
+function triggerInput(element) {
+    var event = new Event('input', {
+        'bubbles': true,
+        'cancelable': true
+    });
+    element.dispatchEvent(event);
+}

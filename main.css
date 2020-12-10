@@ -87,13 +87,13 @@ select.setting_div {
 .tags {
     margin-bottom: 14px;
 }
-.group-s input {
+.group_s input {
     width: 52px;
     border: 1px solid black;
     /* border-radius: 5px; */
     /* margin-right: 2px; */
 }
-.group-s select {
+.group_s select {
     width: 101px;
     height: 21px;
     border: 1px solid black;
@@ -132,7 +132,7 @@ input.center{
     margin-bottom: 20px;
     position: relative;
 }
-.div-settings .group-s{
+.div-settings .group_s{
     margin-bottom: 15px;
     display: flex;
 }
@@ -181,6 +181,6 @@ input.center{
 .indents-show:checked + div{
     display: flex;
 }
-.border {
+input.border  {
     width: 119px;
 }

@@ -11,8 +11,15 @@ const edit_checkbox = document.querySelector('#current_active_edit');
 const copyHTML = document.querySelector('.copy_html');
 const active_parent = document.querySelector('.active_parent');
 const full_screen = document.querySelector('.full_screen');
+const group_s_input = document.querySelectorAll('.group_s input[type="text"]');
+const group_s_select = document.querySelectorAll('.group_s select');
+
 
 let current_active = web_site;
+
+registerInputOnChange(group_s_input,'input');
+registerInputOnChange(group_s_select,'change');
+
 
 
 edit_checkbox.addEventListener('click', function(){
@@ -179,7 +186,6 @@ delete_tag.addEventListener('click', function(event) {
 
 active_parent.addEventListener('click', function() {
     if ((current_active != web_site)/* && (!current_active.parentElement.classList.contains('web_site'))*/) {
-        if (current_active.parentElement.classList.contains('web_site')) current_active_checkbox.checked = true;
         current_active = current_active.parentElement;
         let active_tag = document.querySelector('.active_tag');
         if (active_tag) active_tag.classList.remove('active_tag');
