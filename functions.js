@@ -14,25 +14,11 @@ for (let i = 0; i < input_units.length; i++) {
     input_units[i].replaceWith(new_block);
 }
 
-let switch_units = document.querySelectorAll('.units .switch-units');
-for (let i = 0; i < switch_units.length; i++) {
-    switch_units[i].addEventListener('change', function(){
-        let input = this.parentElement.querySelector('input[type="text"]');
-        let num  = input.value.match(/\d+/);
-        if (num) input.value = num + this.nextSibling.innerText;
-    });    
-}
-
-
-
-
-
-
 // functions
 function registerInputOnChange(object, event_on){
     for (let i = 0; i < object.length; i++) {   
         object[i].addEventListener(event_on, function(event){            
-            if (this.tagName == 'INPUT'){
+            if ((this.tagName == 'INPUT') && (this.parentElement.classList.contains('units'))){
                 let checked_unit = this.parentElement.querySelector('input:checked').nextSibling.innerText;
                 let unit_reg = this.value.match(/\D+/);
                 let unit = unit_reg ? unit_reg[0] : '' || checked_unit;
@@ -45,7 +31,8 @@ function registerInputOnChange(object, event_on){
                     this.value = number + unit;
                     this.setSelectionRange(number.length, number.length);
                 }
-            }
+            }    
+            fourSidesTogetherUpdate(this);
             if (edit_checkbox.checked) {
                 let css_text = this.value;
                 let css = this.getAttribute('data-tags-settings');
@@ -55,10 +42,91 @@ function registerInputOnChange(object, event_on){
     }
 }
 
+
 function triggerInput(element) {
     var event = new Event('input', {
         'bubbles': true,
         'cancelable': true
     });
     element.dispatchEvent(event);
+}
+
+function fourSidesTogetherUpdate(object) {
+    let setting_mp = object.parentElement.parentElement;
+    if (setting_mp.classList.contains('settings-mp') ) {
+        let center = setting_mp.querySelector('input.center');
+        let settings = setting_mp.querySelectorAll('.units input[type="text"]');
+        center.value = (settings[1].value || '0px') + " " + (settings[2].value || '0px') + " " + (settings[3].value || '0px') + " " + (settings[0].value || '0px');       
+        triggerInput(center);
+    }
+}
+
+function colorPicker(){
+    
+    let context, gradient, hue;
+    let canvas = document.querySelector('canvas.color-line');
+    let w = canvas.width;
+    let h = canvas.height;
+    context = canvas.getContext("2d");
+    gradient = context.createLinearGradient(w / 2, h, w / 2, 0);
+
+    hue = [[255, 0, 0], [255, 255, 0], [0, 255, 0], [0, 255, 255], [0, 0, 255], [255, 0, 255], [255, 0, 0]];
+    for (var i = 0; i <= 6; i++) {
+        color = 'rgb(' + hue[i][0] + ',' + hue[i][1] + ',' + hue[i][2] + ')';
+        gradient.addColorStop(i * 1 / 6, color);
+    };
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, w, h);
+
+    const colorPickerSquare = document.querySelector('.picker .square');
+    const blockPicker = document.querySelector('.block_picker');
+    blockPicker.querySelector('.bk_img').draggable = false;
+
+    colorPickerSquare.onmousedown = function(e){
+        let square = this;  
+        let square_xy = square.getBoundingClientRect(); 
+        
+        boundX = square_xy.x - square.offsetLeft; 
+        boundY = square_xy.y - square.offsetTop;  
+        document.onmousemove = function(e) {     
+            e.preventDefault();        
+            let x = Math.round(e.pageX - boundX) - square.clientWidth/2;
+            if (x < 0 ) x = 0;
+            if (x + square.clientWidth > blockPicker.clientWidth  ) x = blockPicker.clientWidth  - square.clientWidth ;
+    
+            let y = Math.round(e.pageY - boundY) - square.clientHeight/2;
+            if (y < 0 ) y = 0;
+            if (y + square.clientHeight > blockPicker.clientHeight ) y = blockPicker.clientHeight - square.clientHeight ;
+    
+            square.style.position = 'absolute';
+            square.style.left = x + 'px';
+            square.style.top = y + 'px';
+        };
+        document.onmouseup = function() {
+            document.onmousemove = null;
+            this.onmouseup = null;
+        };
+    };   
+    const arrows= document.querySelector('.picker .arrows');
+    arrows.onmousedown = function(e){
+        let arrows = this;  
+        let arrows_xy = arrows.getBoundingClientRect(); 
+        
+        boundX = arrows_xy.x - arrows.offsetLeft; 
+        boundY = arrows_xy.y - arrows.offsetTop;  
+        document.onmousemove = function(e) {             
+            e.preventDefault();
+            let y = Math.round(e.pageY - boundY) - arrows.clientHeight/2;
+            if (y < 0 ) y = 0;
+            if (y + arrows.clientHeight > blockPicker.clientHeight ) y = blockPicker.clientHeight - arrows.clientHeight ;
+    
+            arrows.style.position = 'absolute';
+            arrows.style.top = y + 'px';
+        };
+        document.onmouseup = function() {
+            document.onmousemove = null;
+            this.onmouseup = null;
+        };
+    };
+
 }

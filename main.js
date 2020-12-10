@@ -19,12 +19,24 @@ let current_active = web_site;
 
 registerInputOnChange(group_s_input,'input');
 registerInputOnChange(group_s_select,'change');
+colorPicker();
 
 
-
+const switch_units = document.querySelectorAll('.units .switch-units');
+for (let i = 0; i < switch_units.length; i++) {
+    switch_units[i].addEventListener('change', function(){
+        let input = this.parentElement.querySelector('input[type="text"]');
+        let num  = input.value.match(/\d+/);
+        if (num) input.value = num + this.nextSibling.innerText;
+        fourSidesTogetherUpdate(this);
+        if (edit_checkbox.checked) {
+            console.log(current_active, input.value);
+            current_active.style[input.getAttribute('data-tags-settings')] = input.value;
+        }
+    });    
+}
 edit_checkbox.addEventListener('click', function(){
     if (current_active != web_site) {
-        console.log('edit');
         change_tag.disabled = true;
     } else {
         edit_checkbox.checked = false;        
