@@ -64,10 +64,7 @@ web_site.addEventListener('click', function(event) {
             let temp_css = split_css[i].split(':');
             document.querySelector('.tags_settings [data-tags-settings="' + temp_css[0].trim() + '"]').value = temp_css[1].trim();
         } 
-    }
-  
-    
-   
+    }    
 });
 
 //  отобразить теги
