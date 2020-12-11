@@ -80,7 +80,14 @@ function colorPicker(){
 
     const colorPickerSquare = document.querySelector('.picker .square');
     const blockPicker = document.querySelector('.block_picker');
+    const colorText = document.querySelector('.color-text');
+    const colorView = document.querySelector('.color-view');
     blockPicker.querySelector('.bk_img').draggable = false;
+    let V = 100;
+    let S = 0;
+    let H = 0
+    let px_X = blockPicker.clientWidth;
+    let px_Y = blockPicker.clientHeight;
 
     colorPickerSquare.onmousedown = function(e){
         let square = this;  
@@ -101,12 +108,26 @@ function colorPicker(){
             square.style.position = 'absolute';
             square.style.left = x + 'px';
             square.style.top = y + 'px';
+
+            S = square.offsetLeft * 100 / (blockPicker.clientWidth - square.clientWidth);
+            V = 100 - square.offsetTop * 100 / (blockPicker.clientHeight - square.clientHeight);
+            S = Math.round(S);
+            V = Math.round(V);
+            
+            let rgb = 'rgb(' + hsv_rgb(H, S, V).join() + ')'; 
+            colorText.value =  rgb;
+            colorView.style.background =  rgb;
+
+            
         };
         document.onmouseup = function() {
             document.onmousemove = null;
             this.onmouseup = null;
         };
+
+       
     };   
+        
     const arrows= document.querySelector('.picker .arrows');
     arrows.onmousedown = function(e){
         let arrows = this;  
@@ -122,6 +143,14 @@ function colorPicker(){
     
             arrows.style.position = 'absolute';
             arrows.style.top = y + 'px';
+            let maxH = canvas.clientHeight - arrows.clientHeight;
+            H = 360 - arrows.offsetTop * 100 / (canvas.clientHeight - arrows.clientHeight) / 100 * 360
+            H = Math.round(H);
+            if (H == 360) H = 0
+            let rgb = 'rgb(' + hsv_rgb(H, S, V).join() + ')'; 
+            colorText.value =  rgb;
+            blockPicker.style.background = 'rgb(' + hsv_rgb(H, 100, 100).join() + ')';
+            colorView.style.background =  rgb;
         };
         document.onmouseup = function() {
             document.onmousemove = null;
@@ -129,4 +158,30 @@ function colorPicker(){
         };
     };
 
+    function hsv_rgb (H,S,V){
+        var f , p, q , t, lH;
+    
+        S /=100;
+        V /=100;
+        
+        lH = Math.floor(H / 60);
+        
+        f = H/60 - lH;
+                    
+        p = V * (1 - S); 
+                        
+        q = V *(1 - S*f);
+            
+        t = V* (1 - (1-f)* S);
+        
+        switch (lH){            
+            case 0: R = V; G = t; B = p; break;
+            case 1: R = q; G = V; B = p; break;
+            case 2: R = p; G = V; B = t; break;
+            case 3: R = p; G = q; B = V; break;
+            case 4: R = t; G = p; B = V; break;
+            case 5: R = V; G = p; B = q; break;
+        }
+        return [parseInt(R*255), parseInt(G*255), parseInt(B*255)];
+    }
 }
