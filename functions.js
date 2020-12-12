@@ -45,7 +45,29 @@ function registerInputOnChange(object, event_on){
         });
     }
 }
-
+function deleteSaveLocalStorage(save, key='constructorSite'){
+    let local_data = getLocalStorage(); 
+    delete local_data[save];
+    forJson = local_data || {};
+    localStorage.setItem(key, JSON.stringify(forJson));
+}
+function setLocalStorage(data, key='constructorSite'){
+    
+    let local_data = getLocalStorage(); 
+    let arr = local_data ? Object.keys(local_data) : [];   
+    forJson = local_data|| {};
+    let counter = parseInt(localStorage.getItem('constructorSiteCounter')) + 1; // localStorage.setItem('constructorSiteCounter', 0);
+    localStorage.setItem('constructorSiteCounter', counter)
+    let name = 's' + counter;
+    forJson[name] = data;
+    localStorage.setItem(key, JSON.stringify(forJson));
+    return name;
+}
+function getLocalStorage(key='constructorSite'){
+   let json_data = localStorage.getItem(key);
+   data = JSON.parse(json_data);  
+   return data;  
+}
 
 function triggerInput(element) {
     var event = new Event('input', {
@@ -63,6 +85,23 @@ function fourSidesTogetherUpdate(object) {
         center.value = (settings[1].value || '0px') + " " + (settings[2].value || '0px') + " " + (settings[3].value || '0px') + " " + (settings[0].value || '0px');       
         triggerInput(center);
     }
+}
+
+function copyHtml(copyText){    
+    let textBuffer = document.getElementById("buffer"); 
+    // пока оставлю так потом найду метод получше с копированием в буфер (textarea скрыто за экраном (absolute))
+    textBuffer.innerHTML= copyText;
+
+    textBuffer.select();
+    document.execCommand("copy"); 
+    let copied = document.createElement('div');
+    copied.className = "hide_3";
+    copied.innerHTML = "Скопировано!";
+    page_control.append(copied);
+    textBuffer.innerHTML= '';
+    setTimeout(function() {
+        copied.remove();
+    }, 1000, copied);
 }
 
 function colorPicker(){
@@ -115,10 +154,10 @@ function colorPicker(){
             S = Math.round(S);
             V = Math.round(V);
             
-            let rgb = 'rgb(' + hsv_rgb(H, S, V).join() + ')'; 
+            let rgb = 'rgb(' + hsvToRgb(H, S, V).join() + ')'; 
             colorText.value =  rgb;
             colorView.style.background =  rgb;        
-            change_color(rgb);    
+            changeColor(rgb);    
         };
         document.onmouseup = function() {
             document.onmousemove = null;
@@ -147,18 +186,18 @@ function colorPicker(){
             H = 360 - arrows.offsetTop  / (canvas.clientHeight - arrows.clientHeight) * 360
             H = Math.round(H);
             if (H == 360) H = 0
-            let rgb = 'rgb(' + hsv_rgb(H, S, V).join() + ')'; 
+            let rgb = 'rgb(' + hsvToRgb(H, S, V).join() + ')'; 
             colorText.value =  rgb;
-            blockPicker.style.background = 'rgb(' + hsv_rgb(H, 100, 100).join() + ')';
+            blockPicker.style.background = 'rgb(' + hsvToRgb(H, 100, 100).join() + ')';
             colorView.style.background =  rgb;
-            change_color(rgb);
+            changeColor(rgb);
         };
         document.onmouseup = function() {
             document.onmousemove = null;
             this.onmouseup = null;
         };
     };
-    function change_color(rgb) {
+    function changeColor(rgb) {
         let input_color = document.querySelectorAll('input.color');
         for (let i = 0; i < input_color.length; i++) {
             let check = input_color[i].checked;
@@ -166,7 +205,7 @@ function colorPicker(){
             if (edit_checkbox.checked) triggerInput(input_color[i].previousElementSibling);
         }
     }
-    function hsv_rgb (H,S,V){
+    function hsvToRgb (H,S,V){
         var f , p, q , t, lH;
     
         S /=100;

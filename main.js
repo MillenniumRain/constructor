@@ -7,21 +7,139 @@ const create_tag =  document.querySelector('.create_tag');
 const change_tag =  document.querySelector('.change_tag');
 const delete_tag =  document.querySelector('.delete_tag');
 const btn_tags =  document.querySelector('.tags');
-const copyHTML = document.querySelector('.copy_html');
+const copy_html = document.querySelector('.copy_html');
 const active_parent = document.querySelector('.active_parent');
 const full_screen = document.querySelector('.full_screen');
 const group_s_input = document.querySelectorAll('.group_s input[type="text"]');
 const group_s_select = document.querySelectorAll('.group_s select');
+const select_all = document.querySelector('.select_all');
+const select_child = document.querySelector('.select_child');
+const switch_units = document.querySelectorAll('.units .switch-units');
+const copy_css = document.querySelector('.copy_css');
+const paste_css = document.querySelector('.paste_css');
+const popup_save = document.querySelector('.popup-save');
+const save_load = document.querySelector('.save_load');
+
 
 
 let current_active = web_site;
+let copied_css = ''
 
 registerInputOnChange(group_s_input,'input');
 registerInputOnChange(group_s_select,'change');
 colorPicker();
 
 
-const switch_units = document.querySelectorAll('.units .switch-units');
+save_load.addEventListener('click', function(){
+    popup_save.style.display = "flex";
+    let table = popup_save.querySelector('.data-body>.saves tbody');
+    data = getLocalStorage();
+    for (var saves in data) {
+        let tr = `<tr>
+        <td>${data[saves]['name']}  
+        </td>
+        <td class="date">${data[saves]['date']}</td>   
+        <td>${data[saves]['description']}
+        </tr><input name="saveId" type=""hidden value="${saves}">`;
+        table.innerHTML = tr + table.innerHTML;
+    }    
+});
+
+popup_save.addEventListener('click', function(event){
+    let close = event.target.closest('div.close-save-popup');
+    let save = event.target.closest('button.data-save');    
+    let clear = event.target.closest('button.data-clear');
+
+    let load = event.target.closest('button.data-save');
+    let tr_click = event.target.closest('tr');
+
+
+    if ((close) || (event.target == this)) {
+        this.style.display = 'none';
+        popup_save.querySelector('tbody').innerHTML = '<tr><td colspan="3" style="white-space: break-spaces;font-size: 10px;font-style: italic;color: #888888;">Ограничение хранения 5 мб(когда-нибудь будет это серверная часть)</td></tr>';
+    } 
+    if (save) {
+        let currentdate = new Date();
+        let date =  currentdate.getDate() + "."
+                        + (currentdate.getMonth()+1)  + "." 
+                        + currentdate.getFullYear() + " "  
+                        + currentdate.getHours() + ":"  
+                        + currentdate.getMinutes() + ":" 
+                        + currentdate.getSeconds();
+        let table = this.querySelector('.data-body>.saves tbody');
+
+        if (save.classList.contains('active')) save.classList.remove('active');
+        else save.classList.add('active');
+
+
+        if (save.classList.contains('active')) {                      
+            save.innerText = 'Save';           
+            let tr = `<tr class="new-input"><td><input class="clear" name="name" autocomplete="off"></td>   <td class="date">${date}</td>   <td><input class="clear" name="description" autocomplete="off"></tr>`;
+            table.innerHTML = tr + table.innerHTML;
+            let input = this.querySelector('input.clear[name="name"]');
+            input.focus();
+        } else  {     
+            let tr = this.querySelector('tr.new-input');
+            let input_name = tr.querySelector('input.clear[name="name"]');
+            let input_description = tr.querySelector('input.clear[name="description"]');
+            let data = {};
+            data.name = input_name.value || 'save';
+            data.date = date;
+            data.description = input_description.value;
+            data.html = web_site.innerHTML || 'Пустой шаблон';
+
+            input_name.parentElement.innerHTML = input_name.value || 'save';
+            input_description.parentElement.innerHTML = input_description.value;
+            let id = setLocalStorage(data);
+            tr.outerHTML += `<input name="saveId" type="" hidden="" value="${id}">`
+            save.innerText = '+';
+        }          
+    }
+    if (load){
+        
+    }
+    if (tr_click){
+        if (tr_click.classList.contains('active')) tr_click.classList.remove('active');
+        else tr_click.classList.add('active');
+    }
+    if (clear) { 
+        let tr_clicked = this.querySelectorAll('tr.active');
+        for (let i = 0; i < tr_clicked.length; i++) {     
+            let input = tr_clicked[i].nextElementSibling;        
+            deleteSaveLocalStorage(input.value);
+            input.outerHTML = '';
+            tr_clicked[i].outerHTML = '';
+            
+            // localStorage.removeItem('constructorSite');
+        }
+        
+    }
+});
+copy_css.addEventListener('click', function(){
+    copied_css = current_active.getAttribute('style');
+});
+paste_css.addEventListener('click', function(){
+    let current_actives = document.querySelectorAll('.active_tag');
+    for (var i=0, max=current_actives.length; i < max; i++) {
+        current_actives[i].setAttribute('style', copied_css);
+    }
+});
+select_child.addEventListener('click', function(){
+    let all = current_active.getElementsByTagName("*");
+    for (var i=0, max=all.length; i < max; i++) {
+        all[i].classList.add('active_tag');
+        current_active_edit.checked = true;
+    }
+});
+
+select_all.addEventListener('click', function(){
+    let all = web_site.getElementsByTagName("*");
+    for (var i=0, max=all.length; i < max; i++) {
+        all[i].classList.add('active_tag');
+        current_active_edit.checked = true;
+    }
+});
+
 for (let i = 0; i < switch_units.length; i++) {
     switch_units[i].addEventListener('change', function(){
         let input = this.parentElement.querySelector('input[type="text"]');
@@ -146,25 +264,14 @@ full_screen.addEventListener('click', function(event) {
 });
 
 
-copyHTML.addEventListener('click', function() {
+copy_html.addEventListener('click', function() {
     if (document.querySelector('div.hide_3') == null){
-        copyText = web_site.innerHTML.replace('<plaintext>', '').replace(/            /gm, '').trim();
-        let textBuffer = document.getElementById("buffer"); 
-        // пока оставлю так потом найду метод получше с копированием в буфер (textarea скрыто за экраном (absolute))
-        textBuffer.innerHTML= copyText;
-
-        textBuffer.select();
-        document.execCommand("copy"); 
-        let copied = document.createElement('div');
-        copied.className = "hide_3";
-        copied.innerHTML = "Скопировано!";
-        page_control.append(copied);
-        textBuffer.innerHTML= '';
-        setTimeout(function() {
-            copied.remove();
-        }, 1000, copied);
+        let copyText = web_site.innerHTML.replace('<plaintext>', '').replace(/            /gm, '').trim();
+        copyHtml(copyText);
     }
 });
+
+
 
 
 btn_tags.addEventListener('click', function(event) {

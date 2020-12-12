@@ -275,3 +275,83 @@ input.border  {
 	user-select: none; 
     -webkit-user-select: none;   
 }
+/*popup*/
+.popup-save {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background: #16161693;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup-save .data {
+    background: #fff;
+    width: 400px;
+    height: 300px;
+    vertical-align: middle;
+    border: 10px solid #888888;
+    border-radius: 20px;
+    padding: 8px;
+    position: relative;
+}
+.close-save-popup {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+.close-save-popup:hover{
+    cursor: pointer;
+}
+.data-head button{
+    width: 40px;
+}
+.data-body{
+    display: flex;
+    justify-content: center;    
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 90%;
+}
+.saves {
+    border-collapse: collapse;
+    margin-top: 15px;
+    width: 100%;
+}
+.saves input {
+    width: 95%;
+    border: none;
+    font-size: 16px;
+    /* text-align: left; */
+}
+.saves input:focus {
+    border: none;
+    outline: none;
+}
+
+.saves tr {
+    border-bottom: 1px solid black;
+}
+.saves th {
+    padding-bottom: 15px;
+}
+.saves td{
+    padding: 8px 4px 8px 4px;
+    white-space: nowrap;
+    text-align: center;
+    width: 33%;
+}
+.saves tr:hover {
+    cursor: pointer;
+    background: #dedede;
+}
+.saves tr.active {
+    cursor: pointer;
+    background: #c4c4c4;
+}
+.saves td.date {
+    font-size: 13px;
+    color: #767676;
+    font-style: italic;
+}
