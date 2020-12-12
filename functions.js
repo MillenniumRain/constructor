@@ -13,7 +13,7 @@ for (let i = 0; i < input_units.length; i++) {
     `;
     input_units[i].replaceWith(new_block);
 }
-
+const edit_checkbox = document.querySelector('#current_active_edit');
 // functions
 function registerInputOnChange(object, event_on){
     for (let i = 0; i < object.length; i++) {   
@@ -22,7 +22,7 @@ function registerInputOnChange(object, event_on){
                 let checked_unit = this.parentElement.querySelector('input:checked').nextSibling.innerText;
                 let unit_reg = this.value.match(/\D+/);
                 let unit = unit_reg ? unit_reg[0] : '' || checked_unit;
-                let number = this.value.match(/\d+/)[0];
+                let number = this.value.replace(/\D+/g, '');
                 if ((unit != '%') && (unit != 'px')) {
                     unit = unit.replace('%','');
                     this.value = number + unit;
@@ -34,9 +34,13 @@ function registerInputOnChange(object, event_on){
             }    
             fourSidesTogetherUpdate(this);
             if (edit_checkbox.checked) {
+                let current_actives = document.querySelectorAll('.active_tag');
                 let css_text = this.value;
                 let css = this.getAttribute('data-tags-settings');
-                current_active.style[css] = css_text;
+                for (let i = 0; i < current_actives.length; i++) {
+                    current_actives[i].style[css] = css_text;                   
+                }
+                
             }        
         });
     }
@@ -86,9 +90,6 @@ function colorPicker(){
     let V = 100;
     let S = 0;
     let H = 0
-    let px_X = blockPicker.clientWidth;
-    let px_Y = blockPicker.clientHeight;
-
     colorPickerSquare.onmousedown = function(e){
         let square = this;  
         let square_xy = square.getBoundingClientRect(); 
@@ -116,9 +117,8 @@ function colorPicker(){
             
             let rgb = 'rgb(' + hsv_rgb(H, S, V).join() + ')'; 
             colorText.value =  rgb;
-            colorView.style.background =  rgb;
-
-            
+            colorView.style.background =  rgb;        
+            change_color(rgb);    
         };
         document.onmouseup = function() {
             document.onmousemove = null;
@@ -144,20 +144,28 @@ function colorPicker(){
             arrows.style.position = 'absolute';
             arrows.style.top = y + 'px';
             let maxH = canvas.clientHeight - arrows.clientHeight;
-            H = 360 - arrows.offsetTop * 100 / (canvas.clientHeight - arrows.clientHeight) / 100 * 360
+            H = 360 - arrows.offsetTop  / (canvas.clientHeight - arrows.clientHeight) * 360
             H = Math.round(H);
             if (H == 360) H = 0
             let rgb = 'rgb(' + hsv_rgb(H, S, V).join() + ')'; 
             colorText.value =  rgb;
             blockPicker.style.background = 'rgb(' + hsv_rgb(H, 100, 100).join() + ')';
             colorView.style.background =  rgb;
+            change_color(rgb);
         };
         document.onmouseup = function() {
             document.onmousemove = null;
             this.onmouseup = null;
         };
     };
-
+    function change_color(rgb) {
+        let input_color = document.querySelectorAll('input.color');
+        for (let i = 0; i < input_color.length; i++) {
+            let check = input_color[i].checked;
+            if (check) input_color[i].previousElementSibling.value = rgb;
+            if (edit_checkbox.checked) triggerInput(input_color[i].previousElementSibling);
+        }
+    }
     function hsv_rgb (H,S,V){
         var f , p, q , t, lH;
     

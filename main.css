@@ -83,7 +83,10 @@ select.setting_div {
     outline: 4px inset #457fec !important;
     outline-offset: -4px !important;
 }
-
+.active_tag_edit{
+    outline: 4px inset #d35d18 !important;
+    outline-offset: -4px !important;
+}
 .tags {
     margin-bottom: 14px;
 }
@@ -140,7 +143,7 @@ input.center{
     display: flex;
 }
 
-.color input {
+.color .setting_div {
     width: 103px;
 }
 .switch-units{
@@ -220,6 +223,9 @@ input.border  {
     background: #fff;
     border: 1px solid; 
 }
+.picker .arrows:hover,.picker .square:hover{
+    cursor: pointer;
+} 
 .picker .arrows {
     width: 48px;
     height: 12px;
@@ -255,9 +261,11 @@ input.border  {
     height: inherit;
 }
 .picker .square {
+    
+    border: 1px solid black;
 	width:8px;
 	height:8px;
-	outline: 1px solid rgb(255, 0, 0);
+	outline: 1px solid rgb(255 255 255);
 	position:absolute;
 	left:0;
 	top:0;

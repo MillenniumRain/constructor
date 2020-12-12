@@ -7,7 +7,6 @@ const create_tag =  document.querySelector('.create_tag');
 const change_tag =  document.querySelector('.change_tag');
 const delete_tag =  document.querySelector('.delete_tag');
 const btn_tags =  document.querySelector('.tags');
-const edit_checkbox = document.querySelector('#current_active_edit');
 const copyHTML = document.querySelector('.copy_html');
 const active_parent = document.querySelector('.active_parent');
 const full_screen = document.querySelector('.full_screen');
@@ -30,8 +29,10 @@ for (let i = 0; i < switch_units.length; i++) {
         if (num) input.value = num + this.nextSibling.innerText;
         fourSidesTogetherUpdate(this);
         if (edit_checkbox.checked) {
-            console.log(current_active, input.value);
-            current_active.style[input.getAttribute('data-tags-settings')] = input.value;
+            let current_actives = document.querySelectorAll('.active_tag');
+            for (let i = 0; i < current_actives.length; i++) {
+                current_actives[i].style[input.getAttribute('data-tags-settings')] = input.value;                
+            }
         }
     });    
 }
@@ -44,19 +45,45 @@ edit_checkbox.addEventListener('click', function(){
     if (!edit_checkbox.checked) change_tag.disabled = false;
 });
 
+web_site.addEventListener('dblclick', function (event) {
+    let target =  event.target.closest('div');
+    let active_tag_edit = document.querySelector('.active_tag');
+    if (active_tag_edit) active_tag_edit.classList.remove('active_tag_edit');
+        // target.classList.add('active_tag_edit');
+    if (target.classList.contains('active_tag_edit')) {
+        target.classList.remove('active_tag_edit');
+        current_active_edit.checked = false;
+    } else {
+        target.classList.add('active_tag_edit');     
+        current_active_edit.checked = true; 
+       
+    } 
+    current_active = target;
+
+  });
 web_site.addEventListener('click', function(event) {  
     let target =  event.target.closest('div');
     let active_tag = document.querySelector('.active_tag');
+    let active_tag_edit = document.querySelector('.active_tag');
 
+   
+    
+    if (target != active_tag) {        
+        if (active_tag_edit) active_tag_edit.classList.remove('active_tag_edit');
+        current_active_edit.checked = false;
+        if (event.ctrlKey) {
+            current_active_edit.checked = true;             
+        } else {
+            let active_tags = document.querySelectorAll('.active_tag');
+            if (active_tags) {
+                for (let i = 0; i < active_tags.length; i++) {
+                    active_tags[i].classList.remove('active_tag');                    
+                }                
+            }
+        }          
+    } 
     target.classList.add('active_tag');
-    if (active_tag) active_tag.classList.remove('active_tag');
-    if (target == active_tag) {
-        target.classList.remove('active_tag');
-        current_active = web_site;
-        web_site.classList.add('active_tag');
-    } else {
-        current_active = target;        
-    }    
+    current_active = target;
 
     if (target.getAttribute('style')) {
         let split_css = target.getAttribute('style').split(';'); 
@@ -192,6 +219,7 @@ change_tag.addEventListener('click', function(event) {
 delete_tag.addEventListener('click', function(event) {       
     if (current_active != web_site) current_active.remove();     
 });
+
 
 active_parent.addEventListener('click', function() {
     if ((current_active != web_site)/* && (!current_active.parentElement.classList.contains('web_site'))*/) {
