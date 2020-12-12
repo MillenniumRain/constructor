@@ -304,6 +304,11 @@ input.border  {
 .close-save-popup:hover{
     cursor: pointer;
 }
+.data-head {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+}
 .data-head button{
     width: 40px;
 }
@@ -336,17 +341,17 @@ input.border  {
 .saves th {
     padding-bottom: 15px;
 }
-.saves td{
+.saves tbody td{
     padding: 8px 4px 8px 4px;
     white-space: nowrap;
     text-align: center;
     width: 33%;
 }
-.saves tr:hover {
+.saves tbody tr:hover {
     cursor: pointer;
     background: #dedede;
 }
-.saves tr.active {
+.saves tbody tr.active {
     cursor: pointer;
     background: #c4c4c4;
 }

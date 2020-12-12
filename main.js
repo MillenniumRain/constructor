@@ -19,6 +19,7 @@ const copy_css = document.querySelector('.copy_css');
 const paste_css = document.querySelector('.paste_css');
 const popup_save = document.querySelector('.popup-save');
 const save_load = document.querySelector('.save_load');
+const save_f5 = document.querySelector('.save_f5');
 
 
 
@@ -29,6 +30,22 @@ registerInputOnChange(group_s_input,'input');
 registerInputOnChange(group_s_select,'change');
 colorPicker();
 
+save_f5.addEventListener('click', function(){
+    let tr = this.querySelector('tr.new-input');
+    let currentdate = new Date();
+    let date =  currentdate.getDate() + "."
+            + (currentdate.getMonth()+1)  + "." 
+            + currentdate.getFullYear() + " "  
+            + currentdate.getHours() + ":"  
+            + currentdate.getMinutes() + ":" 
+            + currentdate.getSeconds();
+    let data = {};
+    data.name ='save';
+    data.date = date;
+    data.description = 'Быстрое сохранение';
+    data.html = web_site.innerHTML || 'Пустой шаблон';
+    setLocalStorage(data);
+});
 
 save_load.addEventListener('click', function(){
     popup_save.style.display = "flex";
@@ -50,13 +67,13 @@ popup_save.addEventListener('click', function(event){
     let save = event.target.closest('button.data-save');    
     let clear = event.target.closest('button.data-clear');
 
-    let load = event.target.closest('button.data-save');
-    let tr_click = event.target.closest('tr');
+    let load = event.target.closest('button.data-load');
+    let tr_click = event.target.closest('tbody tr');
 
 
     if ((close) || (event.target == this)) {
         this.style.display = 'none';
-        popup_save.querySelector('tbody').innerHTML = '<tr><td colspan="3" style="white-space: break-spaces;font-size: 10px;font-style: italic;color: #888888;">Ограничение хранения 5 мб(когда-нибудь будет это серверная часть)</td></tr>';
+        popup_save.querySelector('tbody').innerHTML = '';
     } 
     if (save) {
         let currentdate = new Date();
@@ -96,6 +113,12 @@ popup_save.addEventListener('click', function(event){
         }          
     }
     if (load){
+        let template = getLocalStorage();
+        let tr_clicked = this.querySelector('tr.active');
+        if (tr_clicked) {
+            let save = tr_clicked.nextElementSibling.value;
+            web_site.innerHTML = template[save]['html'];
+        }
         
     }
     if (tr_click){

@@ -145,9 +145,14 @@
     <div class="popup-save" style="display: none;">
         <div class="data">
             <div class="data-head">
-                <button class="data-save">+</button>
-                <button class="data-load">Load</button>
-                <button class="data-clear">Clear</button>
+                <div class="left">
+                    <button class="data-save">+</button>
+                    <button class="data-load">Load</button>
+                </div>
+                <div class="left">
+                    <button class="data-clear">Clear</button>
+                </div>
+                
                
             </div>
             <div class="data-body">
@@ -159,9 +164,12 @@
                             <th>Описание</th>
                         </tr>
                     </thead>
-                    <tbody>  
+                    <tbody>
+
+                    </tbody>
+                    <tfoot style="text-align: center;">  
                         <tr><td colspan="3" style="white-space: break-spaces;font-size: 10px;font-style: italic;color: #888888;">***Ограничение хранения 5 мб(когда-нибудь будет это серверная часть)</td></tr>                                             
-                    </tbody>  
+                    </tfoot>  
                 </table>               
             </div>
             <div class="close-save-popup">X</div>
