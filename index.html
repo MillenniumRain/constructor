@@ -28,7 +28,9 @@
                 <button class='paste_css'>Paste</button>  
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <button class="save_f5">Save</button>   
-                <button class="save_load">Save as/Load</button>        
+                <button class="save_load">Save as/Load</button>  
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="import_export">Import/Export</button>     
             </div>
             <div class="right">
                 <div class="icon pin"></div>
@@ -149,7 +151,7 @@
                     <button class="data-save">+</button>
                     <button class="data-load">Load</button>
                 </div>
-                <div class="left">
+                <div class="right">
                     <button class="data-clear">Clear</button>
                 </div>
                 
@@ -172,10 +174,55 @@
                     </tfoot>  
                 </table>               
             </div>
-            <div class="close-save-popup">X</div>
-            
+            <div class="close-popup">X</div>            
         </div>
+    </div>
+    <div class="popup-import" style="display: none;">
+        <div class="data">
+            <div class="data-head">
+                <div class="left">
+                    <button class="data-import" disabled="disabled">Import</button>
+                </div>
+                <div class="center">
+                    Import
+                </div>
+                <div class="right">
+                    <button class="data-export">Export</button>
+                </div>                               
+            </div>
+            <div class="import">
+                <div class="import-head">
+                    <div class="left">HTML</div>
+                    <div class="right">CSS</div>
+                </div>
+                <div class="import_fieds">
+                    <textarea placeholder="Input HTML" name="" class="textarea-html"><div class="div_block_test" ></div><div class="div_block_test2" ></div>
+                    </textarea>
+                    <textarea placeholder="Input CSS" name="" class="textarea-css">.div_block_test{
+    width: 100%; 
+    height: 300px; 
+    display: flex; 
+    outline: rgba(0, 0, 0, 0.8) dashed 2px; 
+    outline-offset: -2px; 
+    background: rgb(160, 44, 44);
+}
+.div_block_test2{width: 100%; height: 300px; display: flex; outline: rgba(0, 0, 0, 0.8) dashed 2px; outline-offset: -2px; background: rgb(160, 44, 44);}
+                        
+                    </textarea>
+                </div>
+                <div class="import-url">
+                    <div class="head-url">URL</div>
+                    <div class="input-url"><input placeholder="Input URL for import site (не воркинг)" type="text"></div>
+                    <div class="foot-url"><button class="import-html;">Import</button></div>
+                </div>
+            </div>
+            <div class="close-popup">X</div>            
+        </div>
+        <div class="export hide">
+               
 
+            <div class="close-popup">X</div>            
+        </div>
     </div>
     <script src="icons.js"></script>
     <script src="functions.js"></script>

@@ -18,7 +18,9 @@ const switch_units = document.querySelectorAll('.units .switch-units');
 const copy_css = document.querySelector('.copy_css');
 const paste_css = document.querySelector('.paste_css');
 const popup_save = document.querySelector('.popup-save');
+const popup_import = document.querySelector('.popup-import');
 const save_load = document.querySelector('.save_load');
+const import_export = document.querySelector('.import_export');
 const save_f5 = document.querySelector('.save_f5');
 
 
@@ -29,6 +31,7 @@ let copied_css = ''
 registerInputOnChange(group_s_input,'input');
 registerInputOnChange(group_s_select,'change');
 colorPicker();
+
 
 save_f5.addEventListener('click', function(){
     let tr = this.querySelector('tr.new-input');
@@ -47,6 +50,20 @@ save_f5.addEventListener('click', function(){
     setLocalStorage(data);
 });
 
+import_export.addEventListener('click', function(){
+    popup_import.style.display = "flex";
+    let table = popup_import.querySelector('.data-body>.saves tbody');
+    data = getLocalStorage();
+    for (var saves in data) {
+        let tr = `<tr>
+        <td>${data[saves]['name']}  
+        </td>
+        <td class="date">${data[saves]['date']}</td>   
+        <td>${data[saves]['description']}
+        </tr><input name="saveId" type=""hidden value="${saves}">`;
+        table.innerHTML = tr + table.innerHTML;
+    }    
+});
 save_load.addEventListener('click', function(){
     popup_save.style.display = "flex";
     let table = popup_save.querySelector('.data-body>.saves tbody');
@@ -61,7 +78,33 @@ save_load.addEventListener('click', function(){
         table.innerHTML = tr + table.innerHTML;
     }    
 });
+popup_import.addEventListener('click', function(event){
+    let close = event.target.closest('div.close-popup');
+    let importSite = event.target.closest('button.data-import');    
+    let exportSite = event.target.closest('button.data-export');
+    let data_head = this.querySelector('.data-head .center');
 
+
+    if ((close) || (event.target == this)) {
+        this.style.display = 'none';
+        this.querySelector('textarea').innerHTML = '';
+    } 
+    if (importSite) {        
+        importSite.setAttribute('disabled', 'disabled');
+        this.querySelector('button.data-export').removeAttribute('disabled', 'disabled');
+        this.querySelector('.import').classList.remove('hide');
+        this.querySelector('.export').classList.add('hide');
+        data_head.innerHTML = 'Import';
+
+    }
+    if (exportSite) {
+        exportSite.setAttribute('disabled', 'disabled');
+        this.querySelector('button.data-import').removeAttribute('disabled');
+        this.querySelector('.import').classList.add('hide');
+        this.querySelector('.export').classList.remove('hide');
+        data_head.innerHTML = 'Export';
+    }
+});
 popup_save.addEventListener('click', function(event){
     let close = event.target.closest('div.close-save-popup');
     let save = event.target.closest('button.data-save');    
@@ -73,7 +116,9 @@ popup_save.addEventListener('click', function(event){
 
     if ((close) || (event.target == this)) {
         this.style.display = 'none';
-        popup_save.querySelector('tbody').innerHTML = '';
+        this.querySelector('tbody').innerHTML = '';
+        this.querySelector('.data-save').classList.remove('active');
+
     } 
     if (save) {
         let currentdate = new Date();
@@ -181,9 +226,9 @@ edit_checkbox.addEventListener('click', function(){
     if (current_active != web_site) {
         change_tag.disabled = true;
     } else {
-        edit_checkbox.checked = false;        
+        this.checked = false;        
     } 
-    if (!edit_checkbox.checked) change_tag.disabled = false;
+    if (!this.checked) change_tag.disabled = false;
 });
 
 web_site.addEventListener('dblclick', function (event) {
