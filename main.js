@@ -52,17 +52,7 @@ save_f5.addEventListener('click', function(){
 
 import_export.addEventListener('click', function(){
     popup_import.style.display = "flex";
-    let table = popup_import.querySelector('.data-body>.saves tbody');
-    data = getLocalStorage();
-    for (var saves in data) {
-        let tr = `<tr>
-        <td>${data[saves]['name']}  
-        </td>
-        <td class="date">${data[saves]['date']}</td>   
-        <td>${data[saves]['description']}
-        </tr><input name="saveId" type=""hidden value="${saves}">`;
-        table.innerHTML = tr + table.innerHTML;
-    }    
+   
 });
 save_load.addEventListener('click', function(){
     popup_save.style.display = "flex";
@@ -83,12 +73,10 @@ popup_import.addEventListener('click', function(event){
     let importSite = event.target.closest('button.data-import');    
     let exportSite = event.target.closest('button.data-export');
     let data_head = this.querySelector('.data-head .center');
+    let import_html_css = event.target.closest('.import-html-css'); 
 
 
-    if ((close) || (event.target == this)) {
-        this.style.display = 'none';
-        this.querySelector('textarea').innerHTML = '';
-    } 
+   
     if (importSite) {        
         importSite.setAttribute('disabled', 'disabled');
         this.querySelector('button.data-export').removeAttribute('disabled', 'disabled');
@@ -104,6 +92,51 @@ popup_import.addEventListener('click', function(event){
         this.querySelector('.export').classList.remove('hide');
         data_head.innerHTML = 'Export';
     }
+    if (import_html_css) {
+        let textarea_html = document.querySelector('.textarea-html');
+        let textarea_css = document.querySelector('.textarea-css');
+        web_site.innerHTML = textarea_html.value;
+
+        //  https://regex101.com/r/44HC7D/3
+        // \.((?!:).)*{[^}]*} на данный момент практически делает то что нужно
+        let style = '<style type="text/css"></style>';
+        css_list = textarea_css.value;
+        css_list_clean = css_list.replace(/\/\*[\S\s]+?\*\//g, '');
+        css_list_media  = css_list_clean.match(/@media[\S\s]+?}([\s]|)+?}/g, ''); // получаем все что в медии 
+        css_list = css_list_clean.replace(/@media[\S\s]+?}([\s]|)+?}/g, ''); // заменяем 
+        css_set = css_list.split('}');
+        web_site.innerHTML = style + web_site.innerHTML;
+        for (let i = 0; i < css_set.length - 1; i++) {
+            let block = css_set[i].split('{');
+            let name = block[0].trim();
+            let css = block[1].trim();
+            if (name.search(':') > -1 ){ // :nth-child по хорошему такие варианты тоже надо учитывать(отдельно)
+                web_site.querySelector('style').innerHTML += css_set[i].trim() + "\n}\n" 
+            } else if(name.search('@') > -1) {
+                web_site.querySelector('style').innerHTML += css_set[i].trim() + "\n}\n" 
+            }
+            else if(name.search(/\*/) > -1) {
+                web_site.querySelector('style').innerHTML += '.web-site ' + css_set[i].trim() + "\n}" 
+            } else {
+               let styles =  web_site.querySelectorAll(name);      
+               for (let j = 0; j < styles.length; j++) {
+                styles[j].style.cssText =  css;                   
+               }  
+            }
+        }
+        // вставка медиа не работает корректно, то что сейчас вставляем в стили в сами тэги перебивает то что кладется в style, нужно лучше обрабатывать css сайтик ломается)
+        for (let i = 0; i < css_list_media.length; i++) {
+            web_site.querySelector('style').innerHTML += css_list_media[i].trim() + "\n"
+        }
+        
+
+
+        close = true;
+    }
+    if ((close) || (event.target == this)) {
+        this.style.display = 'none';
+        this.querySelector('textarea').innerHTML = '';
+    } 
 });
 popup_save.addEventListener('click', function(event){
     let close = event.target.closest('div.close-save-popup');
