@@ -96,8 +96,8 @@ function getLocalStorage(key='constructorSite'){
    return data;  
 }
 
-function triggerInput(element) {
-    var event = new Event('input', {
+function triggerInput(element,tag = 'input') {
+    var event = new Event(tag, {
         'bubbles': true,
         'cancelable': true
     });

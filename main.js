@@ -10,7 +10,7 @@ const btn_tags =  document.querySelector('.tags_switcher');
 const copy_html = document.querySelector('.copy_html');
 const active_parent = document.querySelector('.active_parent');
 const full_screen = document.querySelector('.full_screen');
-const group_s_input = document.querySelectorAll('.group_s input[type="text"]');
+const group_s_input = document.querySelectorAll('.group_s *[type="text"]');
 const group_s_select = document.querySelectorAll('.group_s select');
 const select_all = document.querySelector('.select_all');
 const select_child = document.querySelector('.select_child');
@@ -40,6 +40,7 @@ for (let i = 0; i < text_blocks.length; i++) {
     text_blocks_settings[i] = text_blocks[i].dataset.block;
 }
 registerInputOnChange(group_s_input,'input');
+registerInputOnChange(document.querySelector('.group_s textarea'),'input');
 registerInputOnChange(group_s_select,'change');
 colorPicker();
 
@@ -338,14 +339,15 @@ web_site.addEventListener('click', function(event) {
     target.classList.add('active_tag');
     current_active = target;
     current_tagname = target.tagName.toLowerCase();
-
+    if (target.textContent) document.querySelector('.group_s textarea').value = target.textContent;
     if (target.getAttribute('style')) {
         let split_css = target.getAttribute('style').split(';'); 
         let temp_settings = []
         for (let i = 0; i < split_css.length - 1; i++) {
             let temp_css = split_css[i].split(':');
             temp_settings.push(temp_css[0].trim());
-            document.querySelector('.tags_settings [data-tags-settings="' + temp_css[0].trim() + '"]').value = temp_css[1].trim();
+           let tags_settings =  document.querySelector('.tags_settings [data-tags-settings="' + temp_css[0].trim() + '"]');
+           if (tags_settings) tags_settings.value = temp_css[1].trim();
         } 
         for (let i = 0; i < blocks_settings.length; i++) {
             if (temp_settings.indexOf(blocks_settings[i]) == -1) {
@@ -458,9 +460,9 @@ change_tag.addEventListener('click', function(event) {
     let tag_name = current_tagname;
     let css = "";
     let settings = document.querySelectorAll('.setting_div');;
-    for (let i = 0; i < settings.length; i++) {
+    for (let i = 0; i < settings.length; i++) { // меняется css текущего и единственного текущего
         if (settings[i].value) {
-            css += settings[i].getAttribute('data-tags-settings') + ":" + settings[i].value + ";\n";
+            current_active.style[settings[i].getAttribute('data-tags-settings')] = settings[i].value;
         }        
     }
     if (text_blocks_settings.indexOf(tag_name) > -1){
@@ -469,12 +471,16 @@ change_tag.addEventListener('click', function(event) {
             current_actives[i].innerHTML = document.querySelector('.group_s textarea').value;
         }
     }
-    
-    if (current_active != web_site) current_active.style.cssText = css;     
 });
 
 delete_tag.addEventListener('click', function(event) {       
-    if (current_active != web_site) current_active.remove();     
+    
+    let active_tags = document.querySelectorAll('.active_tag');
+    if (active_tags) {
+        for (let i = 0; i < active_tags.length; i++) {
+            if (active_tags[i] != web_site) active_tags[i].remove('active_tag');                    
+        }                
+    }   
 });
 
 
