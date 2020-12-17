@@ -17,6 +17,8 @@ const select_child = document.querySelector('.select_child');
 const switch_units = document.querySelectorAll('.units .switch-units');
 const copy_css = document.querySelector('.copy_css');
 const paste_css = document.querySelector('.paste_css');
+const copy_block = document.querySelector('.copy_block');
+const paste_block = document.querySelector('.paste_block');
 const popup_save = document.querySelector('.popup-save');
 const popup_import = document.querySelector('.popup-import');
 const save_load = document.querySelector('.save_load');
@@ -40,10 +42,17 @@ for (let i = 0; i < text_blocks.length; i++) {
     text_blocks_settings[i] = text_blocks[i].dataset.block;
 }
 registerInputOnChange(group_s_input,'input');
-registerInputOnChange(document.querySelector('.group_s textarea'),'input');
 registerInputOnChange(group_s_select,'change');
 colorPicker();
 
+let copied_block = '';
+
+copy_block.addEventListener('click', function(event){
+    copied_block = current_active.outerHTML;
+});
+paste_block.addEventListener('click', function(event){
+    current_active.innerHTML += copied_block;
+});
 tags_buttons.addEventListener('click', function(event){
     let target = event.target.closest('span');    
     if (target) {
@@ -60,9 +69,6 @@ tags_buttons.addEventListener('click', function(event){
             deleted.classList.remove('active');   
         }            
     }
-    
-    // if (active_tag == 'block')
-
 });
 
 save_f5.addEventListener('click', function(){
@@ -106,8 +112,7 @@ popup_import.addEventListener('click', function(event){
     let exportSite = event.target.closest('button.data-export');
     let data_head = this.querySelector('.data-head .center');
     let import_html_css = event.target.closest('.import-html-css'); 
-
-
+   
    
     if (importSite) {        
         importSite.setAttribute('disabled', 'disabled');
@@ -171,7 +176,7 @@ popup_import.addEventListener('click', function(event){
     } 
 });
 popup_save.addEventListener('click', function(event){
-    let close = event.target.closest('div.close-save-popup');
+    let close = event.target.closest('div.close-popup');
     let save = event.target.closest('button.data-save');    
     let clear = event.target.closest('button.data-clear');
 
@@ -339,7 +344,7 @@ web_site.addEventListener('click', function(event) {
     target.classList.add('active_tag');
     current_active = target;
     current_tagname = target.tagName.toLowerCase();
-    if (target.textContent) document.querySelector('.group_s textarea').value = target.textContent;
+    if (target.textContent && target.textContent == target.innerHTML) document.querySelector('.group_s textarea').value = target.textContent;
     if (target.getAttribute('style')) {
         let split_css = target.getAttribute('style').split(';'); 
         let temp_settings = []
@@ -360,14 +365,7 @@ web_site.addEventListener('click', function(event) {
 
 //  отобразить теги
 view_code.addEventListener('click', function(event) {  
-    if(this.classList.contains('active')) {
-        this.classList.remove('active');
-        web_site.innerHTML = web_site.innerHTML.replace('<plaintext>', '');
-    } else {
-        this.classList.add('active');        
-        web_site.innerHTML = web_site.innerHTML.replace(/            /gm, '').trim();
-        web_site.innerHTML = `<plaintext>` + web_site.innerHTML;
-    }
+// Здесь будет просмотр текущей вложненности с возможносью выбрать нужный тэг
 });
 
 
@@ -440,8 +438,10 @@ create_tag.addEventListener('click', function(event) {
     let settings =  document.querySelectorAll('.setting_div');
     for (let i = 0; i < settings.length; i++) {
         if (settings[i].value) {
-            css += settings[i].getAttribute('data-tags-settings') + ": " + settings[i].value + ";\n";
-        }        
+            if (settings[i].tagName != 'TEXTAREA') {
+                css += settings[i].getAttribute('data-tags-settings') + ": " + settings[i].value + ";\n";
+            }
+        }
     }
     
     
@@ -450,9 +450,9 @@ create_tag.addEventListener('click', function(event) {
     tag.className = tag_name + "_block"; 
     tag.style.cssText = css;
     console.log(css);
-    if (text_blocks_settings.indexOf(tag_name) > -1){
-        tag.innerHTML = document.querySelector('.group_s textarea').value;
-    }
+    // if (text_blocks_settings.indexOf(tag_name) > -1){
+        tag.textContent = document.querySelector('.group_s textarea').value;
+    // }
     current_active.append(tag);        
 });
 

@@ -64,8 +64,9 @@ function registerInputOnChange(object, event_on){
                 let current_actives = document.querySelectorAll('.active_tag');
                 let css_text = this.value;
                 let css = this.getAttribute('data-tags-settings');
-                for (let i = 0; i < current_actives.length; i++) {
-                    current_actives[i].style[css] = css_text;                   
+                for (let j = 0; j < current_actives.length; j++) {
+                    current_actives[j].style[css] = css_text;    
+
                 }
                 
             }        
