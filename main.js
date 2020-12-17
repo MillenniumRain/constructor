@@ -29,7 +29,7 @@ let current_active = web_site;
 let copied_css = ''
 let current_tagname = 'div';
 
-const setting_divs = document.querySelectorAll('.setting_div');
+
 let blocks_settings = [];
 for (let i = 0; i < setting_divs.length; i++) {
     if (setting_divs[i].dataset.tagsSettings) blocks_settings.push(setting_divs[i].dataset.tagsSettings);
@@ -427,11 +427,6 @@ btn_tags.addEventListener('click', function(event) {
         let active = document.querySelector('.btn_tags.active');
         active.classList.remove('active');
         button.classList.add('active');       
-        let textarea = document.querySelector('.group_s.text');
-        if (text_blocks_settings.indexOf(tag_name) > -1){
-            textarea.classList.remove('hide');
-        } else  textarea.classList.add('hide');
-
         current_tagname = tag_name;
     }    
 });
@@ -440,7 +435,7 @@ btn_tags.addEventListener('click', function(event) {
 create_tag.addEventListener('click', function(event) {       
     let tag_name = current_tagname;
     let css = "";
-    let settings =  document.querySelectorAll('.setting_' + tag_name);
+    let settings =  document.querySelectorAll('.setting_div');
     for (let i = 0; i < settings.length; i++) {
         if (settings[i].value) {
             css += settings[i].getAttribute('data-tags-settings') + ": " + settings[i].value + ";\n";
@@ -462,7 +457,7 @@ create_tag.addEventListener('click', function(event) {
 change_tag.addEventListener('click', function(event) {       
     let tag_name = current_tagname;
     let css = "";
-    let settings =  setting_divs;
+    let settings = document.querySelectorAll('.setting_div');;
     for (let i = 0; i < settings.length; i++) {
         if (settings[i].value) {
             css += settings[i].getAttribute('data-tags-settings') + ":" + settings[i].value + ";\n";

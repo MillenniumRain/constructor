@@ -13,6 +13,31 @@ for (let i = 0; i < input_units.length; i++) {
     `;
     input_units[i].replaceWith(new_block);
 }
+const setting_divs = document.querySelectorAll('.setting_div');
+for (let i = 0; i < setting_divs.length; i++) {
+    setting_divs[i].outerHTML = '<div class="icon trash">'+ bucket + '</div>' + setting_divs[i].outerHTML 
+}
+const clear_input = document.querySelectorAll('.icon.trash');
+for (let i = 0; i < clear_input.length; i++) {
+    clear_input[i].addEventListener('click', function(){
+        let next = this.nextSibling;
+        if (next.tagName == "DIV") {
+            next.querySelector('input[type="text"]').value = '';
+        } else if (next.tagName == "SELECT") {
+            next.selectedIndex = 0;
+        } else if (next.classList.contains('center')) {
+            let four_sides = next.parentElement.querySelectorAll('input[type="text"]');
+            for (let j = 0; j < four_sides.length; j++) {
+                four_sides[j].value = '';
+            }
+        } else {
+            next.value = '';
+        }
+        console.log();
+    });
+}
+
+
 const edit_checkbox = document.querySelector('#current_active_edit');
 // functions
 function registerInputOnChange(object, event_on){

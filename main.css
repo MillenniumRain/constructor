@@ -67,11 +67,18 @@ input {
     display: flex;    
 }
 /* icons */
+.icon:hover {
+    cursor: pointer;
+    fill: #457fec;
+}
 .icon {
     display: block;
-    background: #fff;
     width: 25px;
     height: 25px;
+}
+.icon.trash {
+    width: 19px;
+    margin: 0 5px;
 }
 
 .tags {
@@ -116,7 +123,7 @@ select.setting_div {
     /* margin-right: 2px; */
 }
 .group_s select {
-    width: 101px;
+    width: 76px;
     height: 21px;
     border: 1px solid black;
     border-radius: 4px;
@@ -168,10 +175,10 @@ input.center{
 .text{
     display: flex;
 }
-.group_s textarea {
+/* .group_s textarea {
     width: 80%;
     height: 100px;
-}
+} */
 .switch-units{
     display: none;
 }
@@ -215,8 +222,12 @@ input.center{
 .indents-show:checked + div{
     display: flex;
 }
+div.border {
+    display: flex;
+}
 input.border  {
     width: 119px;
+    
 }
 
 /* color-picker */
