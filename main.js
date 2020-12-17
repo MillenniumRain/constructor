@@ -6,7 +6,7 @@ const pin = document.querySelector('.pin');
 const create_tag =  document.querySelector('.create_tag');
 const change_tag =  document.querySelector('.change_tag');
 const delete_tag =  document.querySelector('.delete_tag');
-const btn_tags =  document.querySelector('.tags');
+const btn_tags =  document.querySelector('.tags_switcher');
 const copy_html = document.querySelector('.copy_html');
 const active_parent = document.querySelector('.active_parent');
 const full_screen = document.querySelector('.full_screen');
@@ -22,16 +22,47 @@ const popup_import = document.querySelector('.popup-import');
 const save_load = document.querySelector('.save_load');
 const import_export = document.querySelector('.import_export');
 const save_f5 = document.querySelector('.save_f5');
-
+const tags_buttons = document.querySelector('.tags-buttons');
 
 
 let current_active = web_site;
 let copied_css = ''
+let current_tagname = 'div';
 
+const setting_divs = document.querySelectorAll('.setting_div');
+let blocks_settings = [];
+for (let i = 0; i < setting_divs.length; i++) {
+    if (setting_divs[i].dataset.tagsSettings) blocks_settings.push(setting_divs[i].dataset.tagsSettings);
+}
+const text_blocks = document.querySelectorAll('.texts-btns button');
+let text_blocks_settings = [];
+for (let i = 0; i < text_blocks.length; i++) {
+    text_blocks_settings[i] = text_blocks[i].dataset.block;
+}
 registerInputOnChange(group_s_input,'input');
 registerInputOnChange(group_s_select,'change');
 colorPicker();
 
+tags_buttons.addEventListener('click', function(event){
+    let target = event.target.closest('span');    
+    if (target) {
+        this.querySelector('.active').classList.remove('active');
+        target.classList.add('active');
+        let active_tag = target.dataset.tags;
+        let active = document.querySelector('div.tags.hide');
+        let deleted =   document.querySelector('div.tags.active');
+
+        if (active != target) {
+            active.classList.remove('hide');
+            active.classList.add('active');
+            deleted.classList.add('hide');       
+            deleted.classList.remove('active');   
+        }            
+    }
+    
+    // if (active_tag == 'block')
+
+});
 
 save_f5.addEventListener('click', function(){
     let tr = this.querySelector('tr.new-input');
@@ -226,6 +257,7 @@ paste_css.addEventListener('click', function(){
     }
 });
 select_child.addEventListener('click', function(){
+    current_active.classList.remove('active_tag');
     let all = current_active.getElementsByTagName("*");
     for (var i=0, max=all.length; i < max; i++) {
         all[i].classList.add('active_tag');
@@ -265,7 +297,7 @@ edit_checkbox.addEventListener('click', function(){
 });
 
 web_site.addEventListener('dblclick', function (event) {
-    let target =  event.target.closest('div');
+    let target =  event.target;
     let active_tag_edit = document.querySelector('.active_tag');
     if (active_tag_edit) active_tag_edit.classList.remove('active_tag_edit');
         // target.classList.add('active_tag_edit');
@@ -281,7 +313,7 @@ web_site.addEventListener('dblclick', function (event) {
 
   });
 web_site.addEventListener('click', function(event) {  
-    let target =  event.target.closest('div');
+    let target =  event.target;
     let active_tag = document.querySelector('.active_tag');
     let active_tag_edit = document.querySelector('.active_tag');
 
@@ -291,6 +323,7 @@ web_site.addEventListener('click', function(event) {
         if (active_tag_edit) active_tag_edit.classList.remove('active_tag_edit');
         current_active_edit.checked = false;
         if (event.ctrlKey) {
+            event.preventDefault();
             current_active_edit.checked = true;             
         } else {
             let active_tags = document.querySelectorAll('.active_tag');
@@ -299,17 +332,27 @@ web_site.addEventListener('click', function(event) {
                     active_tags[i].classList.remove('active_tag');                    
                 }                
             }
-        }          
+        }    
+        document.querySelector('.tag_name').innerHTML = target.tagName;   
     } 
     target.classList.add('active_tag');
     current_active = target;
+    current_tagname = target.tagName.toLowerCase();
 
     if (target.getAttribute('style')) {
         let split_css = target.getAttribute('style').split(';'); 
+        let temp_settings = []
         for (let i = 0; i < split_css.length - 1; i++) {
             let temp_css = split_css[i].split(':');
+            temp_settings.push(temp_css[0].trim());
             document.querySelector('.tags_settings [data-tags-settings="' + temp_css[0].trim() + '"]').value = temp_css[1].trim();
         } 
+        for (let i = 0; i < blocks_settings.length; i++) {
+            if (temp_settings.indexOf(blocks_settings[i]) == -1) {
+                document.querySelector('.tags_settings [data-tags-settings="' + blocks_settings[i] + '"]').value = '';
+            }
+            
+        }
     }    
 });
 
@@ -377,20 +420,18 @@ copy_html.addEventListener('click', function() {
 
 btn_tags.addEventListener('click', function(event) {
     if (event.target.closest('button')) {        
+        
         button = event.target.closest('button');
         let  tag_name = button.dataset.block;
 
-        let tags_settings_all =  document.querySelectorAll('.tags_settings');
-        for (let i = 0; i < tags_settings_all.length; i++) {
-            tags_settings_all[i].classList.add('hide');            
-        }
-        let tags_settings =  document.querySelector('.tags_settings.' + tag_name);
-        tags_settings.classList.remove('hide');
+        let active = document.querySelector('.btn_tags.active');
+        active.classList.remove('active');
+        button.classList.add('active');       
+        let textarea = document.querySelector('.group_s.text');
+        if (text_blocks_settings.indexOf(tag_name) > -1){
+            textarea.classList.remove('hide');
+        } else  textarea.classList.add('hide');
 
-        let btn_tag_edit = document.querySelectorAll('.btn_tag_edit')
-        for (let i = 0; i < btn_tag_edit.length; i++) {
-           btn_tag_edit[i].classList.remove('hide');            
-        }
         current_tagname = tag_name;
     }    
 });
@@ -405,22 +446,35 @@ create_tag.addEventListener('click', function(event) {
             css += settings[i].getAttribute('data-tags-settings') + ": " + settings[i].value + ";\n";
         }        
     }
-   
+    
+    
+
     let tag = document.createElement(tag_name);
     tag.className = tag_name + "_block"; 
     tag.style.cssText = css;
+    console.log(css);
+    if (text_blocks_settings.indexOf(tag_name) > -1){
+        tag.innerHTML = document.querySelector('.group_s textarea').value;
+    }
     current_active.append(tag);        
 });
 
 change_tag.addEventListener('click', function(event) {       
     let tag_name = current_tagname;
     let css = "";
-    let settings =  document.querySelectorAll('.setting_' + tag_name);
+    let settings =  setting_divs;
     for (let i = 0; i < settings.length; i++) {
         if (settings[i].value) {
             css += settings[i].getAttribute('data-tags-settings') + ":" + settings[i].value + ";\n";
         }        
     }
+    if (text_blocks_settings.indexOf(tag_name) > -1){
+        let current_actives = document.querySelectorAll('.active_tag');
+        for (var i=0, max=current_actives.length; i < max; i++) {
+            current_actives[i].innerHTML = document.querySelector('.group_s textarea').value;
+        }
+    }
+    
     if (current_active != web_site) current_active.style.cssText = css;     
 });
 

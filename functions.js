@@ -25,11 +25,13 @@ function registerInputOnChange(object, event_on){
                 let number = this.value.replace(/\D+/g, '');
                 if ((unit != '%') && (unit != 'px')) {
                     unit = unit.replace('%','');
-                    this.value = number + unit;
+                    this.value = number ? number + unit : '';
                 } else {
                     str = this.value.replace(unit, '');
-                    this.value = number + unit;
-                    this.setSelectionRange(number.length, number.length);
+                    if (number){
+                        this.value = number + unit;
+                        this.setSelectionRange(number.length, number.length);
+                    }                    
                 }
             }    
             fourSidesTogetherUpdate(this);

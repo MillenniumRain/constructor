@@ -52,6 +52,13 @@ input {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    height: 26px;
+}
+.attach2{
+    display: flex;
+    width: 100%;
+    height: 26px;
+    margin-top: 5px;
 }
 .attach .left{
     display: flex;
@@ -67,10 +74,24 @@ input {
     height: 25px;
 }
 
-.btn_tags {
-    width: 80px;
+.tags {
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: center;
 }
-
+.tags button {
+    width: 70px;
+}
+.btn_tags.active {
+    background-color: #457fec;
+    color: #fff;
+}
+.tags-buttons .active {
+    text-decoration: underline;
+}
+.tags-buttons span:hover {
+    cursor: pointer;
+}
 .hide {
     display: none !important;
 }
@@ -87,9 +108,7 @@ select.setting_div {
     outline: 4px inset #d35d18 !important;
     outline-offset: -4px !important;
 }
-.tags {
-    margin-bottom: 14px;
-}
+
 .group_s input {
     width: 52px;
     border: 1px solid black;
@@ -112,12 +131,12 @@ select.setting_div {
     margin-right: 20px;
     position: relative;
 }
-.units.top {
+.settings-mp .units.top {
     position: absolute;
     top: -23px;
 }
 
-.units.bottom {
+.settings-mp .units.bottom {
     position: absolute;
     bottom: -23px;
 }
@@ -146,6 +165,13 @@ input.center{
 .color .setting_div {
     width: 103px;
 }
+.text{
+    display: flex;
+}
+.group_s textarea {
+    width: 80%;
+    height: 100px;
+}
 .switch-units{
     display: none;
 }
@@ -170,12 +196,14 @@ input.center{
 .switch-units:checked + label.switch-left{
     background: #457fec;
     padding-left: 3px;
+    color: #fff;
     border-right: none;
 }
 .switch-units:checked + label.switch-right{
     background: #457fec;
     padding-right: 3px;
     border-left: none;
+    color: #fff;
 }
 .units{
     display: flex;
@@ -386,4 +414,11 @@ input.border  {
 .popup-import .input-url input {
     width: 100%;
     margin-top: 10px;
+}
+
+
+.tags-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 9px 0;
 }

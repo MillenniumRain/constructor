@@ -20,45 +20,96 @@
                 <div class="icon view_code"></div>
                 <div class="icon copy_html"></div>                
                 <div class="icon active_parent"></div> 
-                &nbsp;&nbsp;&nbsp;&nbsp;   
-                <button class='select_all'>All</button>              
-                <button class='select_child'>Child</button>  
-                &nbsp;&nbsp;&nbsp;&nbsp;          
-                <button class='copy_css'>Copy</button>          
-                <button class='paste_css'>Paste</button>  
-                &nbsp;&nbsp;&nbsp;&nbsp;
                 <button class="save_f5">Save</button>   
                 <button class="save_load">Save as/Load</button>  
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <button class="import_export">Import/Export</button>     
+                &nbsp;&nbsp;
+                <input type="checkbox"  id="current_active_edit">
             </div>
             <div class="right">
+                
                 <div class="icon pin"></div>
                 <div class="icon full_screen"></div>
             </div> 
         </div>
-        <div class="tags">
-            <button class="btn_tags btn_div" data-block="div">div</button>
-            <button class="btn_tags btn_p" data-block="p">p (не воркинг)</button>
-            <button class="btn_tags btn_span" data-block="span">span (не воркинг)</button> 
-            <button class="btn_tags btn_section" data-block="section">section (не воркинг)</button> 
-            <input type="checkbox"  id="current_active_edit">
+        <div class="attach2">
+            &nbsp;&nbsp;&nbsp;&nbsp;   
+            <button class='select_all'>All</button>              
+            <button class='select_child'>Child</button>  
+            &nbsp;&nbsp;&nbsp;&nbsp;          
+            <button class='copy_css'>CopyCSS</button>          
+            <button class='paste_css'>PasteCSS</button>  
+            <!-- &nbsp;&nbsp;&nbsp;&nbsp;          
+            <button class='copy_block'>Copy</button>          
+            <button class='paste_block'>Paste</button>              -->
         </div>
-        <div class="tags_settings div hide">
+        <div class="tags-buttons">
+            <span class="containers active" data-tags="containers">Блоки контейнеры</span>
+            <span class="texts" data-tags="text">Текстовые блоки</span>
+            
+        </div>
+        <div class="tags_switcher">
+            <div class="tags containers-btns active">
+                <button class="btn_tags active" data-block="div">div</button>
+                <button class="btn_tags" data-block="header">header</button>
+                <button class="btn_tags" data-block="article">article</button>
+                <button class="btn_tags" data-block="section">section</button>
+                <button class="btn_tags" data-block="footer">footer</button>            
+            </div>
+            <div class="tags texts-btns hide">
+                <button class="btn_tags" data-block="p">p</button>
+                <button class="btn_tags" data-block="a">a</button>
+                <button class="btn_tags" data-block="span">span</button> 
+                <button class="btn_tags" data-block="h1">h1</button> 
+                <button class="btn_tags" data-block="h2">h2</button> 
+                <button class="btn_tags" data-block="h3">h3</button> 
+                <button class="btn_tags" data-block="h4">h4</button> 
+                <button class="btn_tags" data-block="h5">h5</button> 
+                <button class="btn_tags" data-block="h6">h6</button> 
+            </div>
+        </div>
+        
+        <div class="tags_settings div">
+            <div class="tag_name">Пусто</div>
             <div class="div-settings">
                 <div class="group_s dimension">
                     Ширина: <input class="setting_div" data-units="1" data-tags-settings="width" type="text" value="100%"> &nbsp;&nbsp;
                     Высота: <input class="setting_div"  data-units="1" data-tags-settings="height" type="text" value="300px">           
                 </div>
-                <div class="group_s display">
+                <div class="group_s">
                     Display:   
                     <select class="setting_div" data-tags-settings="display">
+                        <option value="">Выберите значение</option>
                         <option value="block">block</option>
                         <option value="inline-block">inline-block</option>
                         <option value="table">table</option>
+                        <option value="inline">inline</option>
                         <option value="flex" selected>flex</option>
                         <option value="grid">grid</option>
                         <option value="none">none</option>
+                    </select>            
+                    Justify-content:   
+                    <select class="setting_div" data-tags-settings="justify-content">
+                        <option value="" selected>Выберите значение</option>
+                        <option value="flex-start">flex-start</option>
+                        <option value="flex-end">flex-end</option>
+                        <option value="center">center</option>
+                        <option value="space-between">space-between</option>
+                        <option value="space-around">space-around</option>
+                        <option value="space-evenly">space-evenly</option>
+                    </select>            
+                    Vertical-align:
+                    <select class="setting_div" data-tags-settings="vertical-align">   
+                        <option value="" selected>Выберите значение</option>
+                        <option value="baseline">baseline</option>
+                        <option value="bottom">bottom</option>
+                        <option value="middle">middle</option>
+                        <option value="sub">sub</option>
+                        <option value="super">super</option>
+                        <option value="text-bottom">text-bottom</option>
+                        <option value="text-top">text-top</option>
+                        <option value="top">top</option>
                     </select>            
                 </div>
                 <div class="group_s outline">
@@ -72,7 +123,7 @@
                         <div class="settings-mp">
                             <input class="left" data-units="1"  type="text">
                             <input class="top" data-units="1"  type="text">                        
-                            <input class="setting_div center" data-tags-settings="margin" type="text">
+                            <input class="center setting_div" data-tags-settings="margin" type="text">
                             <input class="right" data-units="1"  type="text">
                             <input class="bottom" data-units="1"  type="text">
                         </div> 
@@ -84,7 +135,7 @@
                         <div class="settings-mp">
                             <input class="left" data-units="1" type="text">
                             <input class="top"  data-units="1"  type="text">                        
-                            <input class="setting_div center" data-tags-settings="padding" type="text">
+                            <input class="center setting_div" data-tags-settings="padding" type="text">
                             <input class="right" data-units="1" type="text">
                             <input class="bottom" data-units="1" type="text">
                         </div>
@@ -100,6 +151,12 @@
                 <div class="group_s indents">
                     <div class="border">
                         Border:    <input class="setting_div border"  data-tags-settings="border" type="text">
+                    </div>
+                </div>
+                <div class="group_s text">
+                    <div class="text">
+                        Текст:    <textarea class="setting_div text"   type="text"> </textarea>
+                        Размер Шрифта:    <input class="setting_div" data-tags-settings="font-size"  data-units="1" type="text">
                     </div>
                 </div>
                 <div class="picker">    
@@ -124,25 +181,7 @@
                 <button class="delete_tag btn_tag_edit" >Удалить блок</button> 
                 
             </div>
-        </div>
-        <div class="tags_settings p hide">
-            <input class="setting_p" placeholder="Ширина" data-tags-settings="width" type="text">
-            <input class="setting_p" placeholder="Высота" data-tags-settings="height" type="text">
-            <input class="setting_p" placeholder="Фон" data-tags-settings="background" type="text">
-            <input class="setting_p" placeholder="Цвет" data-tags-settings="color" type="text">
-            <input class="setting_p" placeholder="Граница" data-tags-settings="border" type="text">
-            <input class="setting_p" placeholder="Отступ внешний" data-tags-settings="margin" type="text">
-            <input class="setting_p" placeholder="Отступ внутренний" data-tags-settings="padding" type="text">
-        </div>
-
-        <div class="tags_settings span hide">
-            <input class="setting_span" placeholder="Фон" data-tags-settings="background" type="text">
-            <input class="setting_span" placeholder="Цвет" data-tags-settings="color" type="text">
-            <input class="setting_span" placeholder="Граница" data-tags-settings="border" type="text">
-            <input class="setting_span" placeholder="Отступ внешний" data-tags-settings="margin" type="text">
-            <input class="setting_span" placeholder="Отступ внутренний" data-tags-settings="padding" type="text">
-        </div>             
-        
+        </div>      
     </div>
     <div class="popup-save" style="display: none;">
         <div class="data">
