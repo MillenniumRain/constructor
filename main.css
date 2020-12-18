@@ -76,6 +76,10 @@ input {
     width: 25px;
     height: 25px;
 }
+.icon.active {
+    background: #457fec;
+    fill: #fff;
+}
 .icon.trash {
     width: 19px;
     margin: 0 5px;
@@ -432,4 +436,8 @@ input.border  {
     display: flex;
     justify-content: space-evenly;
     margin: 9px 0;
+}
+.structure_container {
+    height: 300px;
+    overflow: auto;
 }

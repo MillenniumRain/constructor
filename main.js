@@ -184,12 +184,6 @@ popup_save.addEventListener('click', function(event){
     let tr_click = event.target.closest('tbody tr');
 
 
-    if ((close) || (event.target == this)) {
-        this.style.display = 'none';
-        this.querySelector('tbody').innerHTML = '';
-        this.querySelector('.data-save').classList.remove('active');
-
-    } 
     if (save) {
         let currentdate = new Date();
         let date =  currentdate.getDate() + "."
@@ -233,6 +227,7 @@ popup_save.addEventListener('click', function(event){
         if (tr_clicked) {
             let save = tr_clicked.nextElementSibling.value;
             web_site.innerHTML = template[save]['html'];
+            close = true;
         }
         
     }
@@ -240,6 +235,7 @@ popup_save.addEventListener('click', function(event){
         if (tr_click.classList.contains('active')) tr_click.classList.remove('active');
         else tr_click.classList.add('active');
     }
+
     if (clear) { 
         let tr_clicked = this.querySelectorAll('tr.active');
         for (let i = 0; i < tr_clicked.length; i++) {     
@@ -249,9 +245,15 @@ popup_save.addEventListener('click', function(event){
             tr_clicked[i].outerHTML = '';
             
             // localStorage.removeItem('constructorSite');
-        }
-        
+        }        
     }
+    
+    if ((close) || (event.target == this)) {
+        this.style.display = 'none';
+        this.querySelector('tbody').innerHTML = '';
+        this.querySelector('.data-save').classList.remove('active');
+
+    } 
 });
 copy_css.addEventListener('click', function(){
     copied_css = current_active.getAttribute('style');
@@ -365,9 +367,40 @@ web_site.addEventListener('click', function(event) {
 
 //  отобразить теги
 view_code.addEventListener('click', function(event) {  
-// Здесь будет просмотр текущей вложненности с возможносью выбрать нужный тэг
+    let container = '';
+    let all = web_site.querySelectorAll('*');
+    let level = [];
+    if (!this.classList.contains('active')) {
+        this.classList.add('active');
+        let mult = 0;
+        level.push(web_site);
+        for (let i = 0; i < all.length; i++) {
+            if (level.indexOf(all[i].parentElement) > -1){                
+                mult =  level.indexOf(all[i].parentElement);  
+                if (mult < level.length - 1) level = level.slice(0, mult + 1);
+
+            } else {
+                level.push(all[i].parentElement);
+                mult++;
+            }
+
+            container +=   `<div class="activateCurrentBlock" onclick="activateCurrentBlock(${i})">${'&nbsp;&nbsp;&nbsp;&nbsp;'.repeat(mult)}${i}: ${all[i].tagName.toLowerCase()}.${all[i].classList.value.replace(' ', ',')} --- ${all[i].parentElement.classList.value || 'нет класса'}</div>`;
+        }
+        web_site.innerHTML = `<div class="structure_container">${container}</div>` + web_site.innerHTML;
+    } else {
+        this.classList.remove('active');
+        web_site.querySelector('.structure_container').remove();
+    }
+    console.log(level);
 });
 
+function activateCurrentBlock(index){
+    // console.log(index);
+    setTimeout(function(){
+        document.querySelectorAll('.web_site *:not(.activateCurrentBlock):not(.structure_container)')[index].classList.add('active_tag');
+    }, 0);
+    
+}
 
 pin.addEventListener('click', function(event) {    
     if(this.classList.contains('active')) {
@@ -449,7 +482,6 @@ create_tag.addEventListener('click', function(event) {
     let tag = document.createElement(tag_name);
     tag.className = tag_name + "_block"; 
     tag.style.cssText = css;
-    console.log(css);
     // if (text_blocks_settings.indexOf(tag_name) > -1){
         tag.textContent = document.querySelector('.group_s textarea').value;
     // }
