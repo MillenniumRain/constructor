@@ -47,6 +47,7 @@ input {
     border-left: 3px solid #292929;
     background: #c9c9c9;
     padding-left: 6px;
+    overflow: auto;
 }
 .attach{
     display: flex;
@@ -440,4 +441,17 @@ input.border  {
 .structure_container {
     height: 300px;
     overflow: auto;
+    background: #fff;
+    width: 99%;
+}
+.structure_container .activateCurrentBlock:hover{
+    cursor: pointer;
+    background: #c9c9c9;
+    outline: 2px solid black;    
+}
+.activateCurrentBlock.active{
+    color: #457fec;
+}
+.activateCurrentBlock.active_edit{
+    color: #d35d18;
 }

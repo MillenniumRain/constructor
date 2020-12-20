@@ -166,8 +166,7 @@ popup_import.addEventListener('click', function(event){
             web_site.querySelector('style').innerHTML += css_list_media[i].trim() + "\n"
         }
         
-
-
+        if (view_code.classList.contains('active')) structureContainerUpdate();
         close = true;
     }
     if ((close) || (event.target == this)) {
@@ -304,20 +303,11 @@ edit_checkbox.addEventListener('click', function(){
     if (!this.checked) change_tag.disabled = false;
 });
 
+
+
 web_site.addEventListener('dblclick', function (event) {
     let target =  event.target;
-    let active_tag_edit = document.querySelector('.active_tag');
-    if (active_tag_edit) active_tag_edit.classList.remove('active_tag_edit');
-        // target.classList.add('active_tag_edit');
-    if (target.classList.contains('active_tag_edit')) {
-        target.classList.remove('active_tag_edit');
-        current_active_edit.checked = false;
-    } else {
-        target.classList.add('active_tag_edit');     
-        current_active_edit.checked = true; 
-       
-    } 
-    current_active = target;
+    editCurrentActive(target);
 
   });
 web_site.addEventListener('click', function(event) {  
@@ -367,40 +357,19 @@ web_site.addEventListener('click', function(event) {
 
 //  отобразить теги
 view_code.addEventListener('click', function(event) {  
-    let container = '';
-    let all = web_site.querySelectorAll('*');
-    let level = [];
+    let structure_container = document.querySelector('.structure_container');
     if (!this.classList.contains('active')) {
         this.classList.add('active');
-        let mult = 0;
-        level.push(web_site);
-        for (let i = 0; i < all.length; i++) {
-            if (level.indexOf(all[i].parentElement) > -1){                
-                mult =  level.indexOf(all[i].parentElement);  
-                if (mult < level.length - 1) level = level.slice(0, mult + 1);
-
-            } else {
-                level.push(all[i].parentElement);
-                mult++;
-            }
-
-            container +=   `<div class="activateCurrentBlock" onclick="activateCurrentBlock(${i})">${'&nbsp;&nbsp;&nbsp;&nbsp;'.repeat(mult)}${i}: ${all[i].tagName.toLowerCase()}.${all[i].classList.value.replace(' ', ',')} --- ${all[i].parentElement.classList.value || 'нет класса'}</div>`;
-        }
-        web_site.innerHTML = `<div class="structure_container">${container}</div>` + web_site.innerHTML;
+        structureContainerUpdate();
     } else {
         this.classList.remove('active');
-        web_site.querySelector('.structure_container').remove();
+        document.querySelector('.div-settings').style.height = 'auto';
+        structure_container.classList.add('hide');
+        structure_container.innerHTML = '';
     }
-    console.log(level);
 });
 
-function activateCurrentBlock(index){
-    // console.log(index);
-    setTimeout(function(){
-        document.querySelectorAll('.web_site *:not(.activateCurrentBlock):not(.structure_container)')[index].classList.add('active_tag');
-    }, 0);
-    
-}
+
 
 pin.addEventListener('click', function(event) {    
     if(this.classList.contains('active')) {
@@ -485,6 +454,7 @@ create_tag.addEventListener('click', function(event) {
     // if (text_blocks_settings.indexOf(tag_name) > -1){
         tag.textContent = document.querySelector('.group_s textarea').value;
     // }
+    structureContainerUpdate();
     current_active.append(tag);        
 });
 

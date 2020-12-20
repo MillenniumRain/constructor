@@ -1,5 +1,7 @@
+
 let input_units = document.querySelectorAll('[data-units="1"]');
 let input_counter = 0;
+
 for (let i = 0; i < input_units.length; i++) {
     let new_block = document.createElement('div');
     if(input_units[i].classList.length) new_block.classList.add(input_units[i].classList);
@@ -38,8 +40,73 @@ for (let i = 0; i < clear_input.length; i++) {
 }
 
 
-const edit_checkbox = document.querySelector('#current_active_edit');
+
 // functions
+const edit_checkbox = document.querySelector('#current_active_edit');
+function structureContainerUpdate(){
+    let container = '';
+    let all = web_site.querySelectorAll('*');
+    let level = [];
+    let structure_container_ = document.querySelector('.structure_container');
+    let mult = 0;
+    level.push(web_site);
+    for (let i = 0; i < all.length; i++) {
+        if (level.indexOf(all[i].parentElement) > -1){                
+            mult =  level.indexOf(all[i].parentElement);  
+            if (mult < level.length - 1) level = level.slice(0, mult + 1);
+
+        } else {
+            level.push(all[i].parentElement);
+            mult++;
+        }
+
+        container +=   `<div class="activateCurrentBlock" ondblclick="editCurrentBlock(event,${i})" onclick="activateCurrentBlock(event,${i})">${'&nbsp;&nbsp;&nbsp;&nbsp;'.repeat(mult)}${i}: ${all[i].tagName.toLowerCase()}.${all[i].classList.value.replace(' ', ',')} --- ${all[i].parentElement.classList.value || 'нет класса'}</div>`;
+    }
+    structure_container_.classList.remove('hide');
+    structure_container_.innerHTML = container;
+}
+function editCurrentActive (target) {
+
+    let active_tag_edit = document.querySelector('.active_tag_edit');
+    if (active_tag_edit) active_tag_edit.classList.remove('active_tag_edit');
+
+    if (target.classList.contains('active_tag_edit')) {
+        target.classList.remove('active_tag_edit');
+        current_active_edit.checked = false;
+    } else {
+        target.classList.add('active_tag_edit');     
+        current_active_edit.checked = true;        
+    } 
+    current_active = target;
+}
+function editCurrentBlock(event, index){
+    let active_edit = document.querySelector('.activateCurrentBlock.active_edit');
+    if (active_edit) active_edit.classList.remove('active_edit');
+
+    event.target.classList.add('active_edit');
+    current_active.classList.remove('active_tag_edit');
+    current_active = document.querySelectorAll('.web_site *')[index];
+    current_active.classList.add('active_tag_edit');    
+    current_active.scrollIntoView({block: "center", behavior: "smooth"});
+    editCurrentActive(current_active);
+    current_active_edit.checked = true;
+}
+function activateCurrentBlock(event, index){
+    let active_edit = document.querySelector('.activateCurrentBlock.active_edit');
+    if (active_edit) active_edit.classList.remove('active_edit');
+
+    let active = document.querySelector('.activateCurrentBlock.active');
+    if (active) active.classList.remove('active');
+
+
+    event.target.classList.add('active');
+    current_active.classList.remove('active_tag');
+    current_active.classList.remove('active_tag_edit');
+    current_active_edit.checked = false;
+    current_active = document.querySelectorAll('.web_site *')[index];
+    current_active.classList.add('active_tag');    
+    current_active.scrollIntoView({block: "center", behavior: "smooth"});
+}
 function registerInputOnChange(object, event_on){
     for (let i = 0; i < object.length; i++) {   
         object[i].addEventListener(event_on, function(event){            
@@ -65,8 +132,7 @@ function registerInputOnChange(object, event_on){
                 let css_text = this.value;
                 let css = this.getAttribute('data-tags-settings');
                 for (let j = 0; j < current_actives.length; j++) {
-                    current_actives[j].style[css] = css_text;    
-
+                    current_actives[j].style[css] = css_text;  
                 }
                 
             }        
