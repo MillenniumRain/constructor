@@ -35,6 +35,7 @@ for (let i = 0; i < clear_input.length; i++) {
         } else {
             next.value = '';
         }
+        triggerInput(next);
         console.log();
     });
 }
@@ -60,7 +61,7 @@ function structureContainerUpdate(){
             mult++;
         }
 
-        container +=   `<div class="activateCurrentBlock" ondblclick="editCurrentBlock(event,${i})" onclick="activateCurrentBlock(event,${i})">${'&nbsp;&nbsp;&nbsp;&nbsp;'.repeat(mult)}${i}: ${all[i].tagName.toLowerCase()}.${all[i].classList.value.replace(' ', ',')} --- ${all[i].parentElement.classList.value || 'нет класса'}</div>`;
+        container +=   `<div class="activateCurrentBlock" ondblclick="editCurrentBlock(event,${i})" onclick="activateCurrentBlock(event,${i})">${'&nbsp;&nbsp;&nbsp;&nbsp;'.repeat(mult)}${i}: ${all[i].tagName.toLowerCase()}.${all[i].classList.value.replace(' ', ',')} </div>`;
     }
     structure_container_.classList.remove('hide');
     structure_container_.innerHTML = container;

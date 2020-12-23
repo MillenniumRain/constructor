@@ -451,10 +451,10 @@ create_tag.addEventListener('click', function(event) {
     let tag = document.createElement(tag_name);
     tag.className = tag_name + "_block"; 
     tag.style.cssText = css;
-    // if (text_blocks_settings.indexOf(tag_name) > -1){
-        tag.textContent = document.querySelector('.group_s textarea').value;
-    // }
-    structureContainerUpdate();
+    tag.textContent = document.querySelector('.group_s textarea').value;
+    let structure_container = document.querySelector('.structure_container');
+    if (structure_container.innerHTML != '') setTimeout(structureContainerUpdate, 0 );
+    
     current_active.append(tag);        
 });
 
@@ -494,3 +494,35 @@ active_parent.addEventListener('click', function() {
         current_active.classList.add('active_tag');
     }
 });
+
+const resize_page_control = document.querySelector('.resize_page_control');
+resize_page_control.onmousedown = function(event) {
+    event.preventDefault();
+    let resizer = this;
+    let shiftX = event.clientX - resizer.getBoundingClientRect().left;
+
+  
+    moveAt(event.pageX);
+  
+        page_view.style.width = (pageX - shiftX)/window.innerWidth*100 + '%';
+        page_control.style.width = (window.innerWidth - pageX + shiftX)/window.innerWidth*100 + '%';
+    }
+  
+    function onMouseMove(event) {
+      moveAt(event.pageX, event.pageY);
+    }
+  
+    // передвигаем мяч при событии mousemove
+    document.addEventListener('mousemove', onMouseMove);
+  
+    // отпустить мяч, удалить ненужные обработчики
+    document.onmouseup = function() {
+      document.removeEventListener('mousemove', onMouseMove);
+      resizer.onmouseup = null;
+    };
+    // resizer.ondragstart = function() {
+    //     return false;
+    //   };
+  };
+  
+ 

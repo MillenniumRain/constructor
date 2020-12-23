@@ -14,176 +14,176 @@
         <textarea type="text" id="buffer" style=" position: absolute; left: 10000px;"> </textarea>
     </div>
     <div class="page_control">
-
-        <div class="attach">
-            <div class="left">
-                <div class="icon view_code"></div>
-                <div class="icon copy_html"></div>                
-                <div class="icon active_parent"></div> 
-                <button class="save_f5">Save</button>   
-                <button class="save_load">Save as/Load</button>  
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <button class="import_export">Import/Export</button>     
-                &nbsp;&nbsp;
-                <input type="checkbox"  id="current_active_edit">
+        <div class="resize_page_control"></div>
+        <div class="page_control_settings">
+            <div class="attach">
+                <div class="left">
+                    <div class="icon view_code"></div>
+                    <div class="icon copy_html"></div>                
+                    <div class="icon active_parent"></div> 
+                    <button class="save_f5">Save</button>   
+                    <button class="save_load">Save as/Load</button>  
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="import_export">Import/Export</button>     
+                    &nbsp;&nbsp;
+                    <input type="checkbox"  id="current_active_edit">
+                </div>
+                <div class="right">
+                    
+                    <div class="icon pin"></div>
+                    <div class="icon full_screen"></div>
+                </div> 
             </div>
-            <div class="right">
+            <div class="attach2">
+                &nbsp;&nbsp;&nbsp;&nbsp;   
+                <button class='select_all'>All</button>              
+                <button class='select_child'>Child</button>  
+                &nbsp;&nbsp;&nbsp;&nbsp;          
+                <button class='copy_css'>CopyCSS</button>          
+                <button class='paste_css'>PasteCSS</button>  
+                &nbsp;&nbsp;&nbsp;&nbsp;          
+                <button class='copy_block'>Copy</button>          
+                <button class='paste_block'>Paste</button>
+            </div>
+            <div class="tags-buttons">
+                <span class="containers active" data-tags="containers">Блоки контейнеры</span>
+                <span class="texts" data-tags="text">Текстовые блоки</span>
                 
-                <div class="icon pin"></div>
-                <div class="icon full_screen"></div>
-            </div> 
-        </div>
-        <div class="attach2">
-            &nbsp;&nbsp;&nbsp;&nbsp;   
-            <button class='select_all'>All</button>              
-            <button class='select_child'>Child</button>  
-            &nbsp;&nbsp;&nbsp;&nbsp;          
-            <button class='copy_css'>CopyCSS</button>          
-            <button class='paste_css'>PasteCSS</button>  
-            &nbsp;&nbsp;&nbsp;&nbsp;          
-            <button class='copy_block'>Copy</button>          
-            <button class='paste_block'>Paste</button>
-        </div>
-        <div class="tags-buttons">
-            <span class="containers active" data-tags="containers">Блоки контейнеры</span>
-            <span class="texts" data-tags="text">Текстовые блоки</span>
-            
-        </div>
-        <div class="tags_switcher">
-            <div class="tags containers-btns active">
-                <button class="btn_tags active" data-block="div">div</button>
-                <button class="btn_tags" data-block="header">header</button>
-                <button class="btn_tags" data-block="article">article</button>
-                <button class="btn_tags" data-block="section">section</button>
-                <button class="btn_tags" data-block="footer">footer</button>            
             </div>
-            <div class="tags texts-btns hide">
-                <button class="btn_tags" data-block="p">p</button>
-                <button class="btn_tags" data-block="a">a</button>
-                <button class="btn_tags" data-block="span">span</button> 
-                <button class="btn_tags" data-block="h1">h1</button> 
-                <button class="btn_tags" data-block="h2">h2</button> 
-                <button class="btn_tags" data-block="h3">h3</button> 
-                <button class="btn_tags" data-block="h4">h4</button> 
-                <button class="btn_tags" data-block="h5">h5</button> 
-                <button class="btn_tags" data-block="h6">h6</button> 
+            <div class="tags_switcher">
+                <div class="tags containers-btns active">
+                    <button class="btn_tags active" data-block="div">div</button>
+                    <button class="btn_tags" data-block="header">header</button>
+                    <button class="btn_tags" data-block="article">article</button>
+                    <button class="btn_tags" data-block="section">section</button>
+                    <button class="btn_tags" data-block="footer">footer</button>            
+                </div>
+                <div class="tags texts-btns hide">
+                    <button class="btn_tags" data-block="p">p</button>
+                    <button class="btn_tags" data-block="a">a</button>
+                    <button class="btn_tags" data-block="span">span</button> 
+                    <button class="btn_tags" data-block="h1">h1</button> 
+                    <button class="btn_tags" data-block="h2">h2</button> 
+                    <button class="btn_tags" data-block="h3">h3</button> 
+                    <button class="btn_tags" data-block="h4">h4</button> 
+                    <button class="btn_tags" data-block="h5">h5</button> 
+                    <button class="btn_tags" data-block="h6">h6</button> 
+                </div>
             </div>
-        </div>
-        <button class="create_tag btn_tag_edit" >Создать блок</button> 
-        <button class="change_tag btn_tag_edit" >Изменить блок</button> 
-        <button class="delete_tag btn_tag_edit" >Удалить блок</button> 
-        <div class="tag_name">Пусто</div>
-        <div class="tags_settings div">        
-            
-            <div class="div-settings">
-                <div class="group_s dimension">
-                    Ширина: <input class="setting_div" data-units="1" data-tags-settings="width" type="text" value="100%"> &nbsp;&nbsp;
-                    Высота: <input class="setting_div"  data-units="1" data-tags-settings="height" type="text" value="300px">           
-                </div>
-                <div class="group_s">
-                    Display:   
-                    <select class="setting_div" data-tags-settings="display">
-                        <option value="">Выберите значение</option>
-                        <option value="block">block</option>
-                        <option value="inline-block">inline-block</option>
-                        <option value="table">table</option>
-                        <option value="inline">inline</option>
-                        <option value="flex" selected>flex</option>
-                        <option value="grid">grid</option>
-                        <option value="none">none</option>
-                    </select>            
-                    Justify-content:   
-                    <select class="setting_div" data-tags-settings="justify-content">
-                        <option value="" selected>Выберите значение</option>
-                        <option value="flex-start">flex-start</option>
-                        <option value="flex-end">flex-end</option>
-                        <option value="center">center</option>
-                        <option value="space-between">space-between</option>
-                        <option value="space-around">space-around</option>
-                        <option value="space-evenly">space-evenly</option>
-                    </select>            
-                    Vertical-align:
-                    <select class="setting_div" data-tags-settings="vertical-align">   
-                        <option value="" selected>Выберите значение</option>
-                        <option value="baseline">baseline</option>
-                        <option value="bottom">bottom</option>
-                        <option value="middle">middle</option>
-                        <option value="sub">sub</option>
-                        <option value="super">super</option>
-                        <option value="text-bottom">text-bottom</option>
-                        <option value="text-top">text-top</option>
-                        <option value="top">top</option>
-                    </select>            
-                </div>
-                <div class="group_s outline">
-                    Контур: <input class="setting_div" placeholder="Outline" data-tags-settings="outline" type="text" value="2px dashed #000000cc">
-                    Отступ контура: <input class="setting_div" placeholder="Outline-offset" data-tags-settings="outline-offset" type="text" value="-2px">
-                </div>
+            <button class="create_tag btn_tag_edit" >Создать блок</button> 
+            <button class="change_tag btn_tag_edit" >Изменить блок</button> 
+            <button class="delete_tag btn_tag_edit" >Удалить блок</button> 
+            <div class="tag_name">Пусто</div>
+            <div class="tags_settings div">        
                 
-                <div class="group_s indents">
-                    <div class="margin">
-                       Margin:  <input class="indents-show" type="checkbox" style="width:auto;height: auto;">
-                        <div class="settings-mp">
-                            <input class="left" data-units="1"  type="text">
-                            <input class="top" data-units="1"  type="text">                        
-                            <input class="center setting_div" data-tags-settings="margin" type="text">
-                            <input class="right" data-units="1"  type="text">
-                            <input class="bottom" data-units="1"  type="text">
+                <div class="div-settings">
+                    <div class="group_s dimension">
+                        Ширина: <input class="setting_div" data-units="1" data-tags-settings="width" type="text" value="100%"> &nbsp;&nbsp;
+                        Высота: <input class="setting_div"  data-units="1" data-tags-settings="height" type="text" value="300px">           
+                    </div>
+                    <div class="group_s">
+                        Display:   
+                        <select class="setting_div" data-tags-settings="display">
+                            <option value="">Выберите значение</option>
+                            <option value="block">block</option>
+                            <option value="inline-block">inline-block</option>
+                            <option value="table">table</option>
+                            <option value="inline">inline</option>
+                            <option value="flex" selected>flex</option>
+                            <option value="grid">grid</option>
+                            <option value="none">none</option>
+                        </select>            
+                        Justify-content:   
+                        <select class="setting_div" data-tags-settings="justify-content">
+                            <option value="" selected>Выберите значение</option>
+                            <option value="flex-start">flex-start</option>
+                            <option value="flex-end">flex-end</option>
+                            <option value="center">center</option>
+                            <option value="space-between">space-between</option>
+                            <option value="space-around">space-around</option>
+                            <option value="space-evenly">space-evenly</option>
+                        </select>            
+                        Vertical-align:
+                        <select class="setting_div" data-tags-settings="align-items">   
+                            <option value="" selected>Выберите значение</option>
+                            <option value="flex-start">flex-start</option>
+                            <option value="flex-end">flex-end</option>
+                            <option value="center">center</option>
+                            <option value="space-between">space-between</option>
+                            <option value="space-around">space-around</option>
+                            <option value="space-evenly">space-evenly</option>
+                        </select>            
+                    </div>
+                    <div class="group_s outline">
+                        Контур: <input class="setting_div" placeholder="Outline" data-tags-settings="outline" type="text" value="2px dashed #000000cc">
+                        Отступ контура: <input class="setting_div" placeholder="Outline-offset" data-tags-settings="outline-offset" type="text" value="-2px">
+                    </div>
+                    
+                    <div class="group_s indents">
+                        <div class="margin">
+                        Margin:  <input class="indents-show" type="checkbox" style="width:auto;height: auto;">
+                            <div class="settings-mp">
+                                <input class="left" data-units="1"  type="text">
+                                <input class="top" data-units="1"  type="text">                        
+                                <input class="center setting_div" data-tags-settings="margin" type="text">
+                                <input class="right" data-units="1"  type="text">
+                                <input class="bottom" data-units="1"  type="text">
+                            </div> 
                         </div> 
-                    </div> 
-                </div>
-                <div class="group_s indents">
-                    <div class="padding">
-                        Padding: <input class="indents-show" type="checkbox" style="width:auto;height: auto;">
-                        <div class="settings-mp">
-                            <input class="left" data-units="1" type="text">
-                            <input class="top"  data-units="1"  type="text">                        
-                            <input class="center setting_div" data-tags-settings="padding" type="text">
-                            <input class="right" data-units="1" type="text">
-                            <input class="bottom" data-units="1" type="text">
+                    </div>
+                    <div class="group_s indents">
+                        <div class="padding">
+                            Padding: <input class="indents-show" type="checkbox" style="width:auto;height: auto;">
+                            <div class="settings-mp">
+                                <input class="left" data-units="1" type="text">
+                                <input class="top"  data-units="1"  type="text">                        
+                                <input class="center setting_div" data-tags-settings="padding" type="text">
+                                <input class="right" data-units="1" type="text">
+                                <input class="bottom" data-units="1" type="text">
+                            </div>
+                        </div>                
+                    </div>
+        
+                    <div class="group_s color">
+                        Цвет: <input class="setting_div" data-tags-settings="color" type="text"> 
+                        <input class="color"  type="radio" name="color"> 
+                        Фон: <input class="setting_div" data-tags-settings="background" type="text">
+                        <input class="color background-color" name="color" type="radio" checked="checked"> 
+                    </div>
+                    <div class="group_s indents">
+                        <div class="border">
+                            Border:    <input class="setting_div border"  data-tags-settings="border" type="text">
                         </div>
-                    </div>                
-                </div>
-    
-                <div class="group_s color">
-                    Цвет: <input class="setting_div" data-tags-settings="color" type="text"> 
-                    <input class="color"  type="radio" name="color"> 
-                    Фон: <input class="setting_div" data-tags-settings="background" type="text">
-                    <input class="color background-color" name="color" type="radio" checked="checked"> 
-                </div>
-                <div class="group_s indents">
-                    <div class="border">
-                        Border:    <input class="setting_div border"  data-tags-settings="border" type="text">
                     </div>
-                </div>
-                <div class="group_s text">
-                    <div class="text">
-                        Текст:    <textarea class="setting_div text"   type="text"> </textarea>
-                        Размер Шрифта:    <input class="setting_div" data-tags-settings="font-size"  data-units="1" type="text">
-                    </div>
-                </div>
-                <div class="picker">    
-                    <div class="block_picker">        
-                        <img src="img/bgGradient.png" class="bk_img">
-                        <div class="square"></div>                
-                    </div>       
-                    <div class="line">
-                        <div class="arrows">
-                            <div class="left_arrow"></div>
-                            <div class="right_arrow"></div>
+                    <div class="group_s text">
+                        <div class="text">
+                            Текст:    <textarea class="setting_div text"   type="text"> </textarea>
+                            Размер Шрифта:    <input class="setting_div" data-tags-settings="font-size"  data-units="1" type="text">
                         </div>
-                        <canvas class="color-line"></canvas>
-                    </div> 
-                    <div class="current-color">
-                        <div class="color-view"></div>
-                        <input class="color-text" type="text">
                     </div>
-                </div>
-               
+                    <div class="picker">    
+                        <div class="block_picker">        
+                            <img src="img/bgGradient.png" class="bk_img">
+                            <div class="square"></div>                
+                        </div>       
+                        <div class="line">
+                            <div class="arrows">
+                                <div class="left_arrow"></div>
+                                <div class="right_arrow"></div>
+                            </div>
+                            <canvas class="color-line"></canvas>
+                        </div> 
+                        <div class="current-color">
+                            <div class="color-view"></div>
+                            <input class="color-text" type="text">
+                        </div>
+                    </div>
                 
-            </div>
-            <div class="structure_container hide"></div>
-        </div>      
+                    
+                </div>
+                <div class="structure_container hide"></div>
+            </div>  
+        </div>    
     </div>
     <div class="popup-save" style="display: none;">
         <div class="data">
@@ -259,7 +259,7 @@
             <input type="checkbox" id="menu-checkbox">
             <nav role="navigation">
                 <label for="menu-checkbox" class="toggle-button" data-open="MENU" data-close="CLOSE" onclick></label>
-                <ul class="main-menu">
+                <ul class="main-menu" style="flex-flow: wrap;">
                     <li><a href="#">HOME</a></li>
                     <li><a href="#">PORTFOLIO</a></li>
                     <li><a href="#">BLOG</a></li>
@@ -283,7 +283,7 @@
             <div class="specialize-container">
             <h3>WE CREATE QUALITY DESIGNS.</h3>
             <p>We specialize in Web Design / Development and Graphic Design</p>   
-            <div class="specialize-cards">
+            <div class="specialize-cards" style="flex-flow: wrap;">
                 <div class="card">
                     <div class="top-card">
                         <img src="img/bottle.png" alt="">
@@ -438,6 +438,7 @@
                     ul{
                         display: flex;
                         align-items: center;
+                        flex-flow: wrap;
                     }
                     #menu-checkbox{
                         display: none;
@@ -498,6 +499,7 @@
                     .specialize-cards {
                         display: flex;
                         justify-content: space-between;
+                        /*flex-flow:wrap;*/
                     }
                     .portfolio {
                         width: 90%;
@@ -647,6 +649,7 @@
                         }
                         .main-menu {
                             display: none;
+                            
                         }
                         .main-menu li {
                             width: 100%;
@@ -703,6 +706,7 @@
                         .specialize-cards {
                             /* display: block; */
                             flex-direction: column;
+                           
                         }  
                         .top-slide {
                             padding-top: 40px;

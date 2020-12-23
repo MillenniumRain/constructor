@@ -27,6 +27,9 @@ input {
 
 
 /*-------------------------------------------*/
+.div_block {
+    transition: all 0.5s ease;
+}
 .page_view {
     width: 65%;
     height: 100%;
@@ -42,12 +45,16 @@ input {
     border-right: 1px solid black; */
 }
 .page_control {
+    display: flex;
+    margin-left: auto;
     width: 35%;
     height: 100%;    
-    border-left: 3px solid #292929;
+    /* border-left: 10px solid #35506f; */
     background: #c9c9c9;
-    padding-left: 6px;
+    /* padding-left: 6px; */
     overflow: auto;
+    background: rgb(25,37,50);
+    background: linear-gradient(132deg, rgb(70 70 70) 0%, rgb(249 245 245) 0%, rgb(189 189 189) 39%, rgb(210 205 205) 65%, rgb(236 236 236) 100%);
 }
 .attach{
     display: flex;
@@ -454,4 +461,17 @@ input.border  {
 }
 .activateCurrentBlock.active_edit{
     color: #d35d18;
+}
+.resize_page_control {
+    width: 12px;
+    height: 100%;
+    position: fixed;
+    background: #35506f;
+}
+.resize_page_control:hover {
+    cursor: col-resize;
+}
+.page_control_settings {
+    padding: 0 0 0 22px;
+    width: 100%;
 }
