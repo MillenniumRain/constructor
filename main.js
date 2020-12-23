@@ -500,10 +500,11 @@ resize_page_control.onmousedown = function(event) {
     event.preventDefault();
     let resizer = this;
     let shiftX = event.clientX - resizer.getBoundingClientRect().left;
-
+  console.log(shiftX, event.clientX, resizer.getBoundingClientRect().left)
   
     moveAt(event.pageX);
   
+    function moveAt(pageX) {
         page_view.style.width = (pageX - shiftX)/window.innerWidth*100 + '%';
         page_control.style.width = (window.innerWidth - pageX + shiftX)/window.innerWidth*100 + '%';
     }
@@ -520,9 +521,9 @@ resize_page_control.onmousedown = function(event) {
       document.removeEventListener('mousemove', onMouseMove);
       resizer.onmouseup = null;
     };
-    // resizer.ondragstart = function() {
-    //     return false;
-    //   };
+    resizer.ondragstart = function() {
+        return false;
+    };
   };
   
  
